@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="自定义View," />
 
 
 
@@ -97,6 +97,7 @@
 
 
 <meta name="description" content="引言一切的自定义都是来自于需求，而在项目开发中由于界面条目太多，所以自然而然的使用到了ScrollerView，当把效果给产品经理的时候呢，ios和Android的效果完全不一样，ios自带的上下拉伸回弹的效果，而Android没有，所以自定义一个具有拉伸效果的ScrollerView迫在眉睫啊.">
+<meta name="keywords" content="自定义View">
 <meta property="og:type" content="article">
 <meta property="og:title" content="自定义具有拉伸阻尼效果的ScrollerView">
 <meta property="og:url" content="https://luweicheng24.github.io/2017/08/21/first/index.html">
@@ -104,7 +105,7 @@
 <meta property="og:description" content="引言一切的自定义都是来自于需求，而在项目开发中由于界面条目太多，所以自然而然的使用到了ScrollerView，当把效果给产品经理的时候呢，ios和Android的效果完全不一样，ios自带的上下拉伸回弹的效果，而Android没有，所以自定义一个具有拉伸效果的ScrollerView迫在眉睫啊.">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://img.blog.csdn.net/20170722211027420?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2017-08-21T03:37:28.574Z">
+<meta property="og:updated_time" content="2017-08-21T04:01:55.585Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自定义具有拉伸阻尼效果的ScrollerView">
 <meta name="twitter:description" content="引言一切的自定义都是来自于需求，而在项目开发中由于界面条目太多，所以自然而然的使用到了ScrollerView，当把效果给产品经理的时候呢，ios和Android的效果完全不一样，ios自带的上下拉伸回弹的效果，而Android没有，所以自定义一个具有拉伸效果的ScrollerView迫在眉睫啊.">
@@ -301,6 +302,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -367,7 +390,43 @@
     
     
     
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
 
+  <!-- JS�� sweetalert ���޸�·�� -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>���ı���:</span><a href="/2017/08/21/first/">自定义具有拉伸阻尼效果的ScrollerView</a></p>
+  <p><span>��������:</span><a href="/" title="���� luweicheng24 �ĸ��˲���">luweicheng24</a></p>
+  <p><span>����ʱ��:</span>2017��08��21�� - 10:08</p>
+  <p><span>��������:</span>2017��08��21�� - 12:08</p>
+  <p><span>ԭʼ����:</span><a href="/2017/08/21/first/" title="自定义具有拉伸阻尼效果的ScrollerView">https://luweicheng24.github.io/2017/08/21/first/</a>
+    <span class="copy-path"  title="����������������"><i class="fa fa-clipboard" data-clipboard-text="https://luweicheng24.github.io/2017/08/21/first/"  aria-label="���Ƴɹ���"></i></span>
+  </p>
+  <p><span>����Э��:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">����-����ҵ��ʹ��-��ֹ���� 4.0 ����</a> ת���뱣��ԭ�����Ӽ����ߡ�</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '���Ƴɹ�',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+
+      
+     </div>
     
 
     
@@ -377,13 +436,20 @@
     
     <div>
     
-        <div style="text-align:center;color: #ccc;font-size:14px;">-------------���Ľ���<i class="fa fa-paw"></i>��л�����Ķ�-------------</div>
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------The Artical End<i class="fa fa-paw"></i>Thanks for you read-------------</div>
     
 </div>
+
     
     </div>
 	
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/自定义View/" rel="tag"><i class="fa fa-tag"></i> 自定义View</a>
+          
+        </div>
       
 
       
@@ -479,7 +545,25 @@
           
 
           
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
 
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
           
 
         </nav>
