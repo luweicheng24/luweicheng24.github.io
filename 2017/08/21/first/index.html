@@ -1,28 +1,334 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-  <title>芦苇</title>
-  <subtitle>芦苇的博客</subtitle>
-  <link href="/atom.xml" rel="self"/>
+<!DOCTYPE html>
+
+
+
   
-  <link href="https://luweicheng24.github.io/"/>
-  <updated>2017-08-21T03:13:05.324Z</updated>
-  <id>https://luweicheng24.github.io/</id>
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
-  <author>
-    <name>luweicheng24</name>
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
     
-  </author>
-  
-  <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>自定义具有拉伸阻尼效果的ScrollerView</title>
-    <link href="https://luweicheng24.github.io/2017/08/21/first/"/>
-    <id>https://luweicheng24.github.io/2017/08/21/first/</id>
-    <published>2017-08-21T02:54:19.000Z</published>
-    <updated>2017-08-21T03:13:05.324Z</updated>
     
-    <content type="html"><![CDATA[<blockquote>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="芦苇" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="引言一切的自定义都是来自于需求，而在项目开发中由于界面条目太多，所以自然而然的使用到了ScrollerView，当把效果给产品经理的时候呢，ios和Android的效果完全不一样，ios自带的上下拉伸回弹的效果，而Android没有，所以自定义一个具有拉伸效果的ScrollerView迫在眉睫啊.   首先来看一下效果图，妹子很漂亮，但是注意重点！！！  好了，下面进入正题，通过继承Scroll">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义具有拉伸阻尼效果的ScrollerView">
+<meta property="og:url" content="https://luweicheng24.github.io/2017/08/21/first/index.html">
+<meta property="og:site_name" content="芦苇">
+<meta property="og:description" content="引言一切的自定义都是来自于需求，而在项目开发中由于界面条目太多，所以自然而然的使用到了ScrollerView，当把效果给产品经理的时候呢，ios和Android的效果完全不一样，ios自带的上下拉伸回弹的效果，而Android没有，所以自定义一个具有拉伸效果的ScrollerView迫在眉睫啊.   首先来看一下效果图，妹子很漂亮，但是注意重点！！！  好了，下面进入正题，通过继承Scroll">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.blog.csdn.net/20170722211027420?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-08-21T03:13:05.324Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自定义具有拉伸阻尼效果的ScrollerView">
+<meta name="twitter:description" content="引言一切的自定义都是来自于需求，而在项目开发中由于界面条目太多，所以自然而然的使用到了ScrollerView，当把效果给产品经理的时候呢，ios和Android的效果完全不一样，ios自带的上下拉伸回弹的效果，而Android没有，所以自定义一个具有拉伸效果的ScrollerView迫在眉睫啊.   首先来看一下效果图，妹子很漂亮，但是注意重点！！！  好了，下面进入正题，通过继承Scroll">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170722211027420?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://luweicheng24.github.io/2017/08/21/first/"/>
+
+
+
+
+
+  <title>自定义具有拉伸阻尼效果的ScrollerView | 芦苇</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	<a href="https://github.com/luweicheng24"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/c6625ac1f3ee0a12250227cf83ce904423abf351/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">芦苇</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">芦苇的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://luweicheng24.github.io/2017/08/21/first/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="luweicheng24">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="芦苇">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">自定义具有拉伸阻尼效果的ScrollerView</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-21T10:54:19+08:00">
+                2017-08-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
 <p>引言<br>一切的自定义都是来自于需求，而在项目开发中由于界面条目太多，所以自然而然的使用到了ScrollerView，当把效果给产品经理的时候呢，ios和Android的效果完全不一样，ios自带的上下拉伸回弹的效果，而Android没有，所以自定义一个具有拉伸效果的ScrollerView迫在眉睫啊.</p>
 </blockquote>
 <!-- 阅读全文 -->
@@ -55,67 +361,383 @@
 <p>在执行完动画回弹后即ScrollerView回归了原始状态，于是rect也就置空，方便下一次继续记录，好了，下面直接贴一份完整代码吧：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div></pre></td><td class="code"><pre><div class="line">import android.content.Context;</div><div class="line">import android.graphics.Rect;</div><div class="line">import android.util.AttributeSet;</div><div class="line">import android.view.MotionEvent;</div><div class="line">import android.view.View;</div><div class="line">import android.view.animation.OvershootInterpolator;</div><div class="line">import android.view.animation.TranslateAnimation;</div><div class="line">import android.widget.ScrollView;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Author   : luweicheng on 2017/7/20 0020 15:15</div><div class="line"> * E-mail   ：1769005961@qq.com</div><div class="line"> * GitHub   : https://github.com/luweicheng24</div><div class="line"> * funcation: 具有拉伸效果的ScrollerView</div><div class="line"> */</div><div class="line"></div><div class="line">public class CustomScroller extends ScrollView &#123;</div><div class="line">    private View childView;// 子View（ScrollerView的唯一子类）</div><div class="line">    private int y;// 点击时y坐标</div><div class="line">    private Rect rect = new Rect();// 矩形(用来保存inner的初始状态，判断是够需要动画回弹效果)</div><div class="line">    public CustomScroller(Context context, AttributeSet attrs) &#123;</div><div class="line">        super(context, attrs);</div><div class="line">    &#125;</div><div class="line">    /**</div><div class="line">     * 在xml布局绘制为界面完成时调用，</div><div class="line">     * 获取ScrollerView中唯一的直系子布局（ScrollerView中不许包含一层ViewGroup，有且只有一个）</div><div class="line">     */</div><div class="line">    @Override</div><div class="line">    protected void onFinishInflate() &#123;</div><div class="line">        if (getChildCount() &gt; 0) &#123;</div><div class="line">            childView = getChildAt(0);</div><div class="line">        &#125;</div><div class="line">        super.onFinishInflate();</div><div class="line">    &#125;</div><div class="line">    /**</div><div class="line">     * touch 事件处理</div><div class="line">     **/</div><div class="line">    @Override</div><div class="line">    public boolean onTouchEvent(MotionEvent ev) &#123;</div><div class="line">        if (childView != null) &#123;</div><div class="line">           handleTouchEvent(ev);</div><div class="line">        &#125;</div><div class="line">        return super.onTouchEvent(ev);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /***</div><div class="line">     * 触摸事件</div><div class="line">     *</div><div class="line">     * @param ev</div><div class="line">     */</div><div class="line">    public void handleTouchEvent(MotionEvent ev) &#123;</div><div class="line">        int action = ev.getAction();</div><div class="line">        switch (action) &#123;</div><div class="line">            case MotionEvent.ACTION_DOWN:</div><div class="line">                y = (int) ev.getY();//按下的时候获取到y坐标</div><div class="line">                break;</div><div class="line">            case MotionEvent.ACTION_MOVE:</div><div class="line">                int nowY = (int) ev.getY(); // 移动时的实时y坐标</div><div class="line">                int delayY = y - nowY;  // 移动时的间隔</div><div class="line">                y = nowY;  // 将本次移动结束时的y坐标赋值给下次移动的起始坐标（也就是nowY）</div><div class="line">                if (isNeedMove()) &#123;</div><div class="line">                    if (rect.isEmpty()) &#123;</div><div class="line">                        //rect保存childView的初始位置信息</div><div class="line">                        rect.set(childView.getLeft(), childView.getTop(), childView.getRight(), childView.getBottom());</div><div class="line">                    &#125;</div><div class="line">                    //移动布局（屏幕移动的距离等于手指滑动距离的一般）</div><div class="line">                    childView.layout(childView.getLeft(), childView.getTop() - delayY / 2, childView.getRight(), childView.getBottom() - delayY / 2);</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                break;</div><div class="line">            case MotionEvent.ACTION_UP:</div><div class="line">                if (isNeedAnimation()) &#123;// 判断rect是否为空，也就是是否被重置了</div><div class="line">                    startAnim();//开始回弹动画</div><div class="line">                &#125;</div><div class="line">                break;</div><div class="line">            default:</div><div class="line">                break;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    private void startAnim() &#123;</div><div class="line">        TranslateAnimation anim = new TranslateAnimation(0, 0, childView.getTop(), rect.top);</div><div class="line">        anim.setDuration(200);</div><div class="line">        anim.setInterpolator(new OvershootInterpolator());//加速器</div><div class="line">        childView.startAnimation(anim);</div><div class="line">        // 将inner布局重新回到起始位置</div><div class="line">        childView.layout(rect.left, rect.top, rect.right, rect.bottom);</div><div class="line">        rect.setEmpty();</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    /**</div><div class="line">     *  判断布局是否需要移动</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    private boolean isNeedMove() &#123;</div><div class="line">        int offset = childView.getMeasuredHeight() - getHeight();</div><div class="line">        int scrollY = getScrollY();</div><div class="line">        // 0是顶部，后面那个是底部（需要仔细想一下这个过程）</div><div class="line">        if (scrollY == 0 || scrollY == offset) &#123;</div><div class="line">            return true;</div><div class="line">        &#125;</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line">    public boolean isNeedAnimation() &#123;</div><div class="line">        return !rect.isEmpty();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>如果有问题，在下面留言，共同探讨。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;引言&lt;br&gt;一切的自定义都是来自于需求，而在项目开发中由于界面条目太多，所以自然而然的使用到了ScrollerView，当把效果给产品经理的时候呢，ios和Android的效果完全不一样，ios自带的上下拉伸回弹的效果，而Android没有，所以自
-    
-    </summary>
+
+      
+    </div>
     
     
-  </entry>
-  
-  <entry>
-    <title>你真的准备好了吗？</title>
-    <link href="https://luweicheng24.github.io/2017/08/12/My-New-Post/"/>
-    <id>https://luweicheng24.github.io/2017/08/12/My-New-Post/</id>
-    <published>2017-08-12T13:27:48.000Z</published>
-    <updated>2017-08-21T02:48:05.008Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="第一篇文章"><a href="#第一篇文章" class="headerlink" title="第一篇文章"></a>第一篇文章</h3><blockquote>
-<p>如何正确编写markDown</p>
-</blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;第一篇文章&quot;&gt;&lt;a href=&quot;#第一篇文章&quot; class=&quot;headerlink&quot; title=&quot;第一篇文章&quot;&gt;&lt;/a&gt;第一篇文章&lt;/h3&gt;&lt;blockquote&gt;
-&lt;p&gt;如何正确编写markDown&lt;/p&gt;
-&lt;/blockquote&gt;
 
     
-    </summary>
+
     
+
     
-  </entry>
+	<div>
+    
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------���Ľ���<i class="fa fa-paw"></i>��л�����Ķ�-------------</div>
+    
+</div>
+    
+    </div>
+	
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/12/My-New-Post/" rel="next" title="你真的准备好了吗？">
+                <i class="fa fa-chevron-left"></i> 你真的准备好了吗？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
   
-  <entry>
-    <title>Hello World</title>
-    <link href="https://luweicheng24.github.io/2017/08/12/hello-world/"/>
-    <id>https://luweicheng24.github.io/2017/08/12/hello-world/</id>
-    <published>2017-08-12T04:26:39.145Z</published>
-    <updated>2017-08-12T04:26:39.145Z</updated>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
-    
-    </summary>
-    
-    
-  </entry>
   
-</feed>
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/header.jpg"
+               alt="luweicheng24" />
+          <p class="site-author-name" itemprop="name">luweicheng24</p>
+           
+              <p class="site-description motion-element" itemprop="description">今天的低头是为了以后更好的抬头</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/luweicheng24" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://my.csdn.net/" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-crosshairs"></i>
+                  
+                    
+                      csdn
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/78c41447b6ff/timeline" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-heartbeat"></i>
+                  
+                    
+                      简书
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        sidebar:
+  display: always
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">luweicheng24</span>
+</div>
+
+
+<span id="busuanzi_container_site_pv">
+    本站访客数<span id="busuanzi_value_site_uv"></span>次
+</span>
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共1.5k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="true"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+ 
+ <script type="text/javascript"
+color="#ccc" opacity='0.7' zIndex="-2" count="120" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
