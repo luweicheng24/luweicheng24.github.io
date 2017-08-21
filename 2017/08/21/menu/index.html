@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="自定义ViewGroup," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="芦苇" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="自定义ViewGroup实现弹出式菜单在看了鸿洋大神的自定义ArcMenu之后，自己动手实现了功能相同的ArcMenu，记录一下:首先来个效果图：">
+<meta name="keywords" content="自定义ViewGroup">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义弹出式菜单">
+<meta property="og:url" content="https://luweicheng24.github.io/2017/08/21/menu/index.html">
+<meta property="og:site_name" content="芦苇">
+<meta property="og:description" content="自定义ViewGroup实现弹出式菜单在看了鸿洋大神的自定义ArcMenu之后，自己动手实现了功能相同的ArcMenu，记录一下:首先来个效果图：">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.blog.csdn.net/20170508120615801?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-08-21T07:01:37.388Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自定义弹出式菜单">
+<meta name="twitter:description" content="自定义ViewGroup实现弹出式菜单在看了鸿洋大神的自定义ArcMenu之后，自己动手实现了功能相同的ArcMenu，记录一下:首先来个效果图：">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170508120615801?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://luweicheng24.github.io/2017/08/21/menu/"/>
+
+
+
+
+
+  <title>自定义弹出式菜单 | 芦苇</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	<a href="https://github.com/luweicheng24"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/c6625ac1f3ee0a12250227cf83ce904423abf351/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">芦苇</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">芦苇的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://luweicheng24.github.io/2017/08/21/menu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="luweicheng24">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="芦苇">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">自定义弹出式菜单</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-21T14:51:21+08:00">
+                2017-08-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="自定义ViewGroup实现弹出式菜单"><a href="#自定义ViewGroup实现弹出式菜单" class="headerlink" title="自定义ViewGroup实现弹出式菜单"></a>自定义ViewGroup实现弹出式菜单</h4><p>在看了鸿洋大神的自定义ArcMenu之后，自己动手实现了功能相同的ArcMenu，记录一下:<br>首先来个效果图：<br><img src="http://img.blog.csdn.net/20170508120615801?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<a id="more"></a>
+<ol>
+<li>自定义属性（创建attr.xml）</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">//创建自定义属性值（中心Button的位置和Item中心Button的半径）</div><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;resources&gt;</div><div class="line">     &lt;attr name=&quot;position&quot;&gt;</div><div class="line">         &lt;enum name=&quot;left_top&quot; value=&quot;0&quot;/&gt;</div><div class="line">         &lt;enum name=&quot;left_bottom&quot; value=&quot;1&quot;/&gt;</div><div class="line">         &lt;enum name=&quot;right_top&quot; value=&quot;2&quot;/&gt;</div><div class="line">         &lt;enum name=&quot;right_bottom&quot; value=&quot;3&quot;/&gt;</div><div class="line">     &lt;/attr&gt;</div><div class="line">     &lt;attr name=&quot;radius&quot; format=&quot;dimension&quot;/&gt;</div><div class="line">    &lt;declare-styleable name=&quot;ArcMenu&quot;&gt;</div><div class="line">        &lt;attr name=&quot;position&quot;/&gt;</div><div class="line">        &lt;attr name=&quot;radius&quot;/&gt;</div><div class="line">    &lt;/declare-styleable&gt;</div><div class="line"></div><div class="line">&lt;/resources&gt;</div></pre></td></tr></table></figure>
+<ol>
+<li>创建ArcMenu继承ViewGroup</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div><div class="line">271</div><div class="line">272</div><div class="line">273</div><div class="line">274</div><div class="line">275</div><div class="line">276</div><div class="line">277</div><div class="line">278</div><div class="line">279</div><div class="line">280</div><div class="line">281</div><div class="line">282</div><div class="line">283</div><div class="line">284</div><div class="line">285</div><div class="line">286</div><div class="line">287</div><div class="line">288</div><div class="line">289</div><div class="line">290</div><div class="line">291</div><div class="line">292</div><div class="line">293</div><div class="line">294</div><div class="line">295</div><div class="line">296</div><div class="line">297</div><div class="line">298</div><div class="line">299</div><div class="line">300</div><div class="line">301</div><div class="line">302</div><div class="line">303</div><div class="line">304</div><div class="line">305</div><div class="line">306</div><div class="line">307</div><div class="line">308</div><div class="line">309</div><div class="line">310</div><div class="line">311</div><div class="line">312</div><div class="line">313</div><div class="line">314</div><div class="line">315</div><div class="line">316</div><div class="line">317</div><div class="line">318</div><div class="line">319</div><div class="line">320</div><div class="line">321</div><div class="line">322</div><div class="line">323</div><div class="line">324</div><div class="line">325</div><div class="line">326</div><div class="line">327</div><div class="line">328</div><div class="line">329</div><div class="line">330</div><div class="line">331</div><div class="line">332</div><div class="line">333</div><div class="line">334</div><div class="line">335</div><div class="line">336</div><div class="line">337</div><div class="line">338</div><div class="line">339</div><div class="line">340</div><div class="line">341</div><div class="line">342</div><div class="line">343</div><div class="line">344</div><div class="line">345</div><div class="line">346</div><div class="line">347</div><div class="line">348</div><div class="line">349</div><div class="line">350</div><div class="line">351</div><div class="line">352</div><div class="line">353</div><div class="line">354</div><div class="line">355</div><div class="line">356</div><div class="line">357</div><div class="line">358</div><div class="line">359</div><div class="line">360</div><div class="line">361</div><div class="line">362</div><div class="line">363</div><div class="line">364</div><div class="line">365</div><div class="line">366</div><div class="line">367</div><div class="line">368</div><div class="line">369</div><div class="line">370</div><div class="line">371</div><div class="line">372</div><div class="line">373</div><div class="line">374</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">import android.content.Context;</div><div class="line">import android.content.res.TypedArray;</div><div class="line">import android.util.AttributeSet;</div><div class="line">import android.util.Log;</div><div class="line">import android.util.TypedValue;</div><div class="line">import android.view.View;</div><div class="line">import android.view.ViewGroup;</div><div class="line">import android.view.animation.AlphaAnimation;</div><div class="line">import android.view.animation.Animation;</div><div class="line">import android.view.animation.AnimationSet;</div><div class="line">import android.view.animation.OvershootInterpolator;</div><div class="line">import android.view.animation.RotateAnimation;</div><div class="line">import android.view.animation.ScaleAnimation;</div><div class="line">import android.view.animation.TranslateAnimation;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Author   : luweicheng on 2017/5/3 0003 18:56</div><div class="line"> * E-mail   ：1769005961@qq.com</div><div class="line"> * GitHub   : https://github.com/luweicheng24</div><div class="line"> * funcation: 自定义ViewGroup</div><div class="line"> */</div><div class="line"></div><div class="line">public class ArcMenu extends ViewGroup implements View.OnClickListener &#123;</div><div class="line">    private Position mPosition = Position.LEFT_BOTTOM;</div><div class="line">    private Statu mStatu = Statu.CLOSE;</div><div class="line">    private int radius = 100;</div><div class="line">    private View mCbutton;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onClick(View v) &#123;</div><div class="line">        toggleButton();</div><div class="line">    &#125;</div><div class="line">    private void toggleButton() &#123;</div><div class="line">        final int count = getChildCount();</div><div class="line">        for (int i = 0; i &lt; count - 1; i++) &#123;</div><div class="line"></div><div class="line">            final View childView = getChildAt(i + 1);</div><div class="line">            childView.setVisibility(View.VISIBLE);</div><div class="line"></div><div class="line">            int xflag = 1;</div><div class="line">            int yflag = 1;</div><div class="line"></div><div class="line">            if (mPosition == Position.LEFT_TOP</div><div class="line">                    || mPosition == Position.LEFT_BOTTOM)</div><div class="line">                xflag = -1;</div><div class="line">            if (mPosition == Position.LEFT_TOP</div><div class="line">                    || mPosition == Position.RIGHT_TOP)</div><div class="line">                yflag = -1;</div><div class="line"></div><div class="line">            // child left</div><div class="line">            int cl = (int) (radius * Math.sin(Math.PI / 2 / (count - 2) * i));</div><div class="line">            // child top</div><div class="line">            int ct = (int) (radius * Math.cos(Math.PI / 2 / (count - 2) * i));</div><div class="line"></div><div class="line">            AnimationSet animSet = new AnimationSet(true);</div><div class="line">            TranslateAnimation translateAnimation = null;</div><div class="line">            switch (mStatu) &#123;</div><div class="line">                case CLOSE:</div><div class="line">                    //to open</div><div class="line">                    translateAnimation = new TranslateAnimation(xflag * cl, 0f, yflag * ct, 0f);</div><div class="line">                    childView.setClickable(true);</div><div class="line">                    childView.setFocusable(true);</div><div class="line">                    break;</div><div class="line">                case OPEN:</div><div class="line">                    //to close</div><div class="line">                    translateAnimation= new TranslateAnimation(0f, xflag * cl, 0f, yflag * ct);</div><div class="line">                    childView.setClickable(false);</div><div class="line">                    childView.setFocusable(false);</div><div class="line">                    break;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            translateAnimation.setAnimationListener(new Animation.AnimationListener() &#123;</div><div class="line">                @Override</div><div class="line">                public void onAnimationStart(Animation animation) &#123;</div><div class="line"></div><div class="line">                &#125;</div><div class="line"></div><div class="line">                @Override</div><div class="line">                public void onAnimationEnd(Animation animation) &#123;</div><div class="line">                    Log.e(&quot;&quot;, &quot;onAnimationEnd: &quot;);</div><div class="line">                    if (mStatu == Statu.CLOSE) &#123;</div><div class="line">                        childView.setVisibility(GONE);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                @Override</div><div class="line">                public void onAnimationRepeat(Animation animation) &#123;</div><div class="line"></div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">            translateAnimation.setFillAfter(true);</div><div class="line">            translateAnimation.setDuration(300);</div><div class="line">            translateAnimation.setStartOffset((i * 100) / (count - 1));</div><div class="line">            translateAnimation.setInterpolator(new OvershootInterpolator(2F));</div><div class="line">            RotateAnimation rotateAnimation = new RotateAnimation(0, 720, RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);</div><div class="line">            rotateAnimation.setFillAfter(true);</div><div class="line">            rotateAnimation.setDuration(300);</div><div class="line"></div><div class="line">            animSet.addAnimation(rotateAnimation);</div><div class="line">            animSet.addAnimation(translateAnimation);</div><div class="line">            childView.startAnimation(animSet);</div><div class="line">            final int index = i+1;</div><div class="line">            childView.setOnClickListener(new OnClickListener() &#123;</div><div class="line">                @Override</div><div class="line">                public void onClick(View v) &#123;</div><div class="line">                    if(onMenuItemClickListener!=null)&#123;</div><div class="line">                        onMenuItemClickListener.itemClick(index);</div><div class="line">                        menuItemAnim(index);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line"></div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line">        changeMenuStaus();</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * Menu的Item动画监听</div><div class="line">     * @param index</div><div class="line">     */</div><div class="line">    private void menuItemAnim(int index) &#123;</div><div class="line">        for (int i = 0; i &lt; getChildCount()-1; i++) &#123;</div><div class="line">            View view = getChildAt(i+1);</div><div class="line">            if(index == i+1)&#123;</div><div class="line">               scaleItem(view);</div><div class="line">            &#125;else&#123;</div><div class="line">                smallScale(view);</div><div class="line">            &#125;</div><div class="line">            view.setClickable(false);</div><div class="line">            view.setFocusable(false);</div><div class="line">            mStatu = Statu.CLOSE;</div><div class="line">          &#125;</div><div class="line"></div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 点击菜单项放大缩小</div><div class="line">     * @param childView</div><div class="line">     */</div><div class="line">    private void scaleItem(View childView) &#123;</div><div class="line">        AnimationSet set  = new AnimationSet(true);</div><div class="line">        ScaleAnimation scale1= new ScaleAnimation(1.0f,1.5f,1.0f,1.5f,Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);</div><div class="line">        scale1.setDuration(200);</div><div class="line">        ScaleAnimation scale2= new ScaleAnimation(1.5f,1.0f,1.5f,1.0f,Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);</div><div class="line">        scale2.setStartOffset(200);</div><div class="line">        scale2.setDuration(200);</div><div class="line">        scale2.setFillAfter(true);</div><div class="line">        Animation alphaAnimation = new AlphaAnimation(1, 0);</div><div class="line">        alphaAnimation.setFillAfter(true);</div><div class="line">        alphaAnimation.setDuration(200);</div><div class="line">        set.addAnimation(scale1);</div><div class="line">        set.addAnimation(scale2);</div><div class="line">        set.addAnimation(alphaAnimation);</div><div class="line">        set.setFillAfter(true);</div><div class="line">        childView.startAnimation(set);</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    private void smallScale(View v)&#123;</div><div class="line">        Animation alphaAnimation = new AlphaAnimation(1, 0);</div><div class="line">        alphaAnimation.setFillAfter(true);</div><div class="line">        alphaAnimation.setDuration(200);</div><div class="line">        v.startAnimation(alphaAnimation);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    /**</div><div class="line">     * 菜单点击监听</div><div class="line">     */</div><div class="line">    public interface OnMenuItemClickListener&#123;</div><div class="line">        void itemClick(int index);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setOnMenuItemClickListener(OnMenuItemClickListener onMenuItemClickListener) &#123;</div><div class="line">        this.onMenuItemClickListener = onMenuItemClickListener;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private OnMenuItemClickListener onMenuItemClickListener;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 切换按钮状态</div><div class="line">     */</div><div class="line">    private void changeMenuStaus() &#123;</div><div class="line">        switch (mStatu) &#123;</div><div class="line">            case OPEN:</div><div class="line">                rotateView(mCbutton, 0, 45f);</div><div class="line">                mStatu = Statu.CLOSE;</div><div class="line">                break;</div><div class="line">            case CLOSE:</div><div class="line">                rotateView(mCbutton, 45f, 0f);</div><div class="line">                mStatu = Statu.OPEN;</div><div class="line">                break;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    public void rotateView(View v, float from, Float to) &#123;</div><div class="line">        /**</div><div class="line">         * 创建旋转动画，</div><div class="line">         * from 开始的旋转角 to 终止的旋转角</div><div class="line">         * piovXType piovYType 旋转的类型 Animation.RELATIVE_TO_DELF 以自身为标准</div><div class="line">         *</div><div class="line">         * pivotXValue （0 - 1）0 代表以该View 的左上角为中心， 1代表以该View 的右底角为中心旋转</div><div class="line">         */</div><div class="line">        RotateAnimation anim = new RotateAnimation(from, to, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);</div><div class="line">        anim.setDuration(200);</div><div class="line">        anim.setFillAfter(true);</div><div class="line">        mCbutton.setAnimation(anim);</div><div class="line">        anim.start();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 打开和关闭的枚举类</div><div class="line">     */</div><div class="line">    public enum Statu &#123;</div><div class="line">        CLOSE,</div><div class="line">        OPEN</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 位置的枚举类</div><div class="line">     */</div><div class="line">    public enum Position &#123;</div><div class="line">        LEFT_TOP,</div><div class="line">        LEFT_BOTTOM,</div><div class="line">        RIGHT_TOP,</div><div class="line">        RIGHT_BOTTOM</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public ArcMenu(Context context) &#123;</div><div class="line">        this(context, null);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public ArcMenu(Context context, AttributeSet attrs) &#123;</div><div class="line">        this(context, attrs, 0);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public ArcMenu(Context context, AttributeSet attrs, int defStyleAttr) &#123;</div><div class="line">        super(context, attrs, defStyleAttr);</div><div class="line"></div><div class="line"></div><div class="line">        //dp转化成px</div><div class="line">        radius = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, radius, getResources().getDisplayMetrics());</div><div class="line">        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ArcMenu, defStyleAttr, 0);</div><div class="line">        int count = a.getIndexCount();</div><div class="line">        /**</div><div class="line">         * 遍历自定义属性赋值</div><div class="line">         */</div><div class="line">        for (int i = 0; i &lt; count; i++) &#123;</div><div class="line">            int attr = a.getIndex(i);</div><div class="line">            switch (attr) &#123;</div><div class="line">                case R.styleable.ArcMenu_position:</div><div class="line">                    int index = a.getInt(attr, 0);</div><div class="line">                    switch (index) &#123;</div><div class="line">                        case 0:</div><div class="line">                            mPosition = Position.LEFT_TOP;</div><div class="line">                            break;</div><div class="line">                        case 1:</div><div class="line">                            mPosition = Position.LEFT_BOTTOM;</div><div class="line">                            break;</div><div class="line">                        case 2:</div><div class="line">                            mPosition = Position.RIGHT_TOP;</div><div class="line">                            break;</div><div class="line">                        case 3:</div><div class="line">                            mPosition = Position.RIGHT_BOTTOM;</div><div class="line">                            break;</div><div class="line">                    &#125;</div><div class="line">                    break;</div><div class="line">                case R.styleable.ArcMenu_radius:</div><div class="line">                    radius = a.getDimensionPixelSize(attr, 100);</div><div class="line">                    break;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        a.recycle();</div><div class="line"></div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) &#123;</div><div class="line">        super.onMeasure(widthMeasureSpec, heightMeasureSpec);</div><div class="line">        /**</div><div class="line">         * 测量子View</div><div class="line">         */</div><div class="line">        int count = getChildCount();</div><div class="line">        for (int i = 0; i &lt; count; i++) &#123;</div><div class="line">            View v = getChildAt(i);</div><div class="line">            measureChild(v, MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onLayout(boolean changed, int l, int t, int r, int b) &#123;</div><div class="line">        if (changed) &#123;</div><div class="line">            layoutCenterButton();</div><div class="line">            int count = getChildCount() - 2;</div><div class="line">            for (int i = 0; i &lt; count + 1; i++) &#123;</div><div class="line">                View view = getChildAt(i + 1);</div><div class="line">                int w = view.getMeasuredWidth();</div><div class="line">                int h = view.getMeasuredHeight();</div><div class="line">                int left = 0;</div><div class="line">                int top = 0;</div><div class="line">                int right = 0;</div><div class="line">                int bottom = 0;</div><div class="line">                switch (mPosition) &#123;</div><div class="line">                    case LEFT_TOP:</div><div class="line">                        left = (int) (radius * Math.sin(Math.PI / 2 / count * i));</div><div class="line">                        top = (int) (radius * Math.cos(Math.PI / 2 / count * i));</div><div class="line">                        right = left + w;</div><div class="line">                        bottom = top + h;</div><div class="line">                        break;</div><div class="line">                    case LEFT_BOTTOM:</div><div class="line">                        left = (int) (radius * Math.sin(Math.PI / 2 / count * i));</div><div class="line">                        bottom = getMeasuredHeight() - (int) (radius * Math.cos(Math.PI / 2 / count * i));</div><div class="line">                        right = left + w;</div><div class="line">                        top = bottom - h;</div><div class="line">                        break;</div><div class="line">                    case RIGHT_BOTTOM:</div><div class="line">                        right = getMeasuredWidth() - (int) (radius * Math.sin(Math.PI / 2 / count * i));</div><div class="line">                        bottom = getMeasuredHeight() - (int) (radius * Math.cos(Math.PI / 2 / count * i));</div><div class="line">                        top = bottom - h;</div><div class="line">                        left = right - w;</div><div class="line">                        break;</div><div class="line">                    case RIGHT_TOP:</div><div class="line">                        right = getMeasuredWidth() - (int) (radius * Math.sin(Math.PI / 2 / count * i));</div><div class="line">                        top = (int) (radius * Math.cos(Math.PI / 2 / count * i));</div><div class="line">                        bottom = top + h;</div><div class="line">                        left = right - w;</div><div class="line">                        break;</div><div class="line"></div><div class="line">                &#125;</div><div class="line">                view.layout(left, top, right, bottom);</div><div class="line">                view.setVisibility(GONE);</div><div class="line">                mStatu = Statu.CLOSE;</div><div class="line">            &#125;</div><div class="line"></div><div class="line"></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 根据布局中设置的position属性来确定中间按钮的位置</div><div class="line">     */</div><div class="line">    private void layoutCenterButton() &#123;</div><div class="line">        int left = 0;</div><div class="line">        int top = 0;</div><div class="line">        mCbutton = getChildAt(0);</div><div class="line">        mCbutton.setOnClickListener(this);</div><div class="line">        int but_width = mCbutton.getMeasuredWidth();</div><div class="line">        int but_height = mCbutton.getMeasuredHeight();</div><div class="line">        switch (mPosition) &#123;</div><div class="line">            case LEFT_TOP:</div><div class="line">                mCbutton.layout(left, top, left + but_width, top + but_height);</div><div class="line">                break;</div><div class="line">            case LEFT_BOTTOM:</div><div class="line">                mCbutton.layout(left, getMeasuredHeight() - but_width, left + but_width, getMeasuredHeight());</div><div class="line"></div><div class="line">                break;</div><div class="line">            case RIGHT_TOP:</div><div class="line">                mCbutton.layout(getMeasuredWidth() - but_width, top, getMeasuredWidth(), top + but_height);</div><div class="line">                break;</div><div class="line">            case RIGHT_BOTTOM:</div><div class="line">                mCbutton.layout(getMeasuredWidth() - but_width, getMeasuredHeight() - but_height, getMeasuredWidth(), getMeasuredHeight());</div><div class="line">                break;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Github源码链接<a href="https://github.com/luweicheng24/ArcMenu" target="_blank" rel="external">这里写链接内容</a></p>
+
+      
+    </div>
+    
+    
+    
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2017/08/21/menu/">自定义弹出式菜单</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 luweicheng24 的个人博客">luweicheng24</a></p>
+  <p><span>发布时间:</span>2017年08月21日 - 14:08</p>
+  <p><span>最后更新:</span>2017年08月21日 - 15:08</p>
+  <p><span>原始链接:</span><a href="/2017/08/21/menu/" title="自定义弹出式菜单">https://luweicheng24.github.io/2017/08/21/menu/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://luweicheng24.github.io/2017/08/21/menu/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+
+      
+     </div>
+    
+
+    
+
+    
+	<div>
+    
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------The Artical End<i class="fa fa-paw"></i>Thanks for you read-------------</div>
+    
+</div>
+
+    
+    </div>
+	
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/自定义ViewGroup/" rel="tag"><i class="fa fa-tag"></i> 自定义ViewGroup</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/21/android-is/" rel="next" title="android与js互调">
+                <i class="fa fa-chevron-left"></i> android与js互调
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/21/rxjava/" rel="prev" title="rxjava">
+                rxjava <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/header.jpg"
+               alt="luweicheng24" />
+          <p class="site-author-name" itemprop="name">luweicheng24</p>
+           
+              <p class="site-description motion-element" itemprop="description">今天的低头是为了以后更好的抬头</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/luweicheng24" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://my.csdn.net/" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-crosshairs"></i>
+                  
+                    
+                      csdn
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/78c41447b6ff/timeline" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-heartbeat"></i>
+                  
+                    
+                      简书
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义ViewGroup实现弹出式菜单"><span class="nav-number">1.</span> <span class="nav-text">自定义ViewGroup实现弹出式菜单</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">luweicheng24</span>
+</div>
+
+
+<span id="busuanzi_container_site_pv">
+    本站访客数<span id="busuanzi_value_site_uv"></span>次
+</span>
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共12.0k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="true"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2142086"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+ 
+ <script type="text/javascript"
+color="#ccc" opacity='0.7' zIndex="-2" count="120" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>

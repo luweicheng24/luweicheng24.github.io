@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="rxjava," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="芦苇" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="####RXJava简单理解  首先，rxjava是什么？其实对于刚接触rxjava的宝宝而言，只需要掌握两点：  观察者模式 异步处理观察上图，清楚生动刻画出了rxjava的观察者模式： 开关(被观察者)作为的是事件的产生方（产生“on”和“off”这两个      Event），有它发起这起开关的事件。 台灯（观察者）作为事件的处理方（处理的是“on”和“off”这两个事件），被动的执行on和">
+<meta name="keywords" content="rxjava">
+<meta property="og:type" content="article">
+<meta property="og:title" content="rxjava">
+<meta property="og:url" content="https://luweicheng24.github.io/2017/08/21/rxjava/index.html">
+<meta property="og:site_name" content="芦苇">
+<meta property="og:description" content="####RXJava简单理解  首先，rxjava是什么？其实对于刚接触rxjava的宝宝而言，只需要掌握两点：  观察者模式 异步处理观察上图，清楚生动刻画出了rxjava的观察者模式： 开关(被观察者)作为的是事件的产生方（产生“on”和“off”这两个      Event），有它发起这起开关的事件。 台灯（观察者）作为事件的处理方（处理的是“on”和“off”这两个事件），被动的执行on和">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.blog.csdn.net/20161209182910300?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-08-21T06:55:04.414Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="rxjava">
+<meta name="twitter:description" content="####RXJava简单理解  首先，rxjava是什么？其实对于刚接触rxjava的宝宝而言，只需要掌握两点：  观察者模式 异步处理观察上图，清楚生动刻画出了rxjava的观察者模式： 开关(被观察者)作为的是事件的产生方（产生“on”和“off”这两个      Event），有它发起这起开关的事件。 台灯（观察者）作为事件的处理方（处理的是“on”和“off”这两个事件），被动的执行on和">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20161209182910300?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://luweicheng24.github.io/2017/08/21/rxjava/"/>
+
+
+
+
+
+  <title>rxjava | 芦苇</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	<a href="https://github.com/luweicheng24"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/c6625ac1f3ee0a12250227cf83ce904423abf351/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">芦苇</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">芦苇的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://luweicheng24.github.io/2017/08/21/rxjava/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="luweicheng24">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="芦苇">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">rxjava</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-21T14:53:59+08:00">
+                2017-08-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>####RXJava简单理解<br>  首先，rxjava是什么？其实对于刚接触rxjava的宝宝而言，只需要掌握两点：</p>
+<ul>
+<li>观察者模式</li>
+<li>异步处理<br><img src="http://img.blog.csdn.net/20161209182910300?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>观察上图，清楚生动刻画出了rxjava的观察者模式：</li>
+<li>开关(被观察者)作为的是事件的产生方（产生“on”和“off”这两个      Event），有它发起这起开关的事件。</li>
+<li>台灯（观察者）作为事件的处理方（处理的是“on”和“off”这两个事件），被动的执行on和off。</li>
+<li>在产生和完成中间，即在事件由产生方传递到处理方的过程中需要被加<br>工，过滤和装换等操作。<a id="more"></a>
+####<strong>重点来了</strong><br>既然rxjava是基于观察者来组建自己的逻辑的，那么我们就来创建观察者（Observer/Subscriber）,被观察者（Observable），然后二者建立订阅的关系（就好像那根电线连接台灯和开关）实现台灯观察开关的具体模式，并且在传递过程中对事件进行处理（比如：降低电压）。<br><strong>Tips：</strong><br>Observer是观察者的接口，Subscriber是实现该接口的抽象类，因此这两个类都可以作为观察者，只是Subscriber在Observer的基础上加入了一下拓展，加入了新的一些方法，所以一般更倾向于Subscriber作为观察者，下面我们就来敲一遍：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//创建被观察者（开关）</div><div class="line">Observable switch = Observable.create(new Observable.onSubscribe&lt;String&gt;()&#123;</div><div class="line">@override</div><div class="line">pubic void call(Subscriber&lt;? super String&gt; subscriber)</div><div class="line">   &#123;</div><div class="line">   subscriber.onNext(&quot;on&quot;); </div><div class="line">   subscriber.onNext(&quot;off&quot;);</div><div class="line">   subscriber.onNext(&quot;on&quot;);</div><div class="line">   subscribere.onCompleted();</div><div class="line">   &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>这是最原始的写法，创建了一个开关类（被观察者），产生了四个事件，开，关，开，结束，以上写法比较繁琐，下面两种比较偷懒的写法：</p>
+<ul>
+<li>模式一：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Observeable switch = Observable.just(&quot;on&quot;,&quot;off&quot;,&quot;on&quot;)；</div></pre></td></tr></table></figure>
+<ul>
+<li>模式二</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String[] events = &#123;&quot;on&quot;,&quot;off&quot;,&quot;on&quot;&#125;; </div><div class="line">Observable switch = Observable.from(events);</div></pre></td></tr></table></figure>
+<p>其实以上两种写法都是对原生的写法进行了更加严密的封装，其实也是将<strong>被观察者（开关）</strong>的那些事件”on”,”off”,”on”进行包装成onNext(“on”)将这样的事件依次发送给<strong>观察者（台灯）</strong>，最后再自己补上onComplete()事件。接下里我们创建观察者：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//创建观察者（原生模式）</div><div class="line">Subscriber light = new Subscriber&lt;String&gt; &#123;</div><div class="line">   @override</div><div class="line">   public void onCompleted()&#123;</div><div class="line">     Log.d(TAG,&quot;has completed&quot;); //事件处理完成时回调</div><div class="line">  &#125;</div><div class="line">  @override</div><div class="line">  public void onError(Throwable e)&#123;//事件出错回调                      Log.e(TAG,&quot;has error&quot;);</div><div class="line"> &#125;</div><div class="line"> @override</div><div class="line"> public void onNext(String s)&#123;//事件发生时回调</div><div class="line"> Log.e(TAG,&quot;handle this ...&quot;+s);</div><div class="line"> &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上写法为原生的观察者写法，也是表较常见的写法，下面来个偷懒的写法：</p>
+<ul>
+<li>偷懒模式（非正式写法）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Action1 light = new Action1&lt;String&gt;&#123;</div><div class="line">@override</div><div class="line">public void call(String s)&#123;</div><div class="line">  Log.e(TAG,&quot;handle this&quot;+s);</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>为什么说它是非正式的写法，首先因为Action1是一个单纯的人畜无害的接口，和Observer没有任何关系，只不过Action1也可以当做观察者来使用，只不过它只能专门处理onNext)()事件，其中Action0,1,2…,0,1,2…代表call()方法能接收的参数个数，接下来我们把观察者和被观察者联系起来：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//订阅</div><div class="line">switch.subscribe(light);//大功告成</div></pre></td></tr></table></figure>
+<p>但是刚开始的时候就是不理解为什么是被观察者订阅观察者，这是搞事情呢！到底谁观察着谁啊，别急有话好好说，询问了度娘之后才理解为什么这样写，按理说台灯观察开关从而开关，没毛病，应该是:<code>light.subscribe(switch);</code>才对啊，之所以开关订阅台灯是为了保证<strong>流失api的调用风格</strong>，那什么优势流式API的调用风格呢？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//这就是流式API调用风格</div><div class="line">Oservable.just(&quot;on&quot;,&quot;off&quot;,&quot;on&quot;)//被观察者产生事件</div><div class="line">	      .filter(new Fun1(String,Boolean)&#123;//将事件进行过滤</div><div class="line">	                    @override</div><div class="line">	                    public Boolean call(String s)&#123;</div><div class="line">	                    return s! = null;</div><div class="line">	                    &#125;</div><div class="line">	          &#125;)</div><div class="line">	       .subscribe(mSubscriber); //将过滤后的事件订阅给观察者是不是感觉看起来很流畅啊</div></pre></td></tr></table></figure>
+<p><strong>操作符（Operators）</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">Observable.just(&quot;ON&quot;,&quot;OFF&quot;,&quot;ON&quot;)</div><div class="line">               .map(new Func1&lt;String, Object&gt;() &#123;</div><div class="line">                   @Override</div><div class="line">                   public Object call(String s) &#123;</div><div class="line">                       if(s.contentEquals(&quot;F&quot;))&#123;</div><div class="line">                           return &quot;false&quot;;</div><div class="line">                       &#125;else &#123;</div><div class="line">                           return true;</div><div class="line">                       &#125;</div><div class="line">                   &#125;</div><div class="line">               &#125;).subscribe(new Action1&lt;Object&gt;() &#123;</div><div class="line">                   @Override</div><div class="line">                   public void call(Object o) &#123;</div><div class="line">                       Log.e(TAG, &quot;call: &quot;+o.toString() ;</div><div class="line">                   &#125;</div><div class="line">               &#125;);</div></pre></td></tr></table></figure>
+<p>利用map操作符将被观察者传递的行为进行过滤，将字符串中含有<strong>F</strong>返回false，不含的返回true，而对于map的参数中第一个为被观察者传递的对象第二个为转换过滤后的对象，通过上面的代码也可以清楚地表现出<strong>流式API的调用</strong>。<br>下面我们来看一下rxjava中如何异步处理：<br>在rxjava中有一个<strong>Scheduler —调度器</strong>，相当于线程控制器用来控制当前代码执行在哪个线程中，目前rxjava中内置了三种Scheduler：</p>
+<ul>
+<li><strong>Schedulers.immedate()</strong>表明直接运行在当前线程，不指定默认为该值；</li>
+<li><strong>Schedulers.newThread()</strong>表明每次执行将开启新的线程；</li>
+<li><strong>Schedulers.io()</strong> I/O 操作（读写文件、读写数据库、网络信息交互等）所使用的 Scheduler。行为模式和 newThread() 差不多，区别在于 io() 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率。不要把计算工作放在 io() 中，可以避免创建不必要的线程。</li>
+<li><strong>Schedulers.computation()</strong>计算所使用的 Scheduler。这个计算指的是 CPU 密集型计算，即不会被 I/O 等操作限制性能的操作，例如图形的计算。这个 Scheduler 使用的固定的线程池，大小为 CPU 核数。不要把 I/O 操作放在 computation() 中，否则 I/O 操作的等待时间会浪费 CPU。</li>
+<li><strong>AndroidSchedulers.mainThread()</strong>表明事件发生在主线程中。<br>有了以上几种线程调度器，就可以使用subscribeOn()和observerOn()来对线程进行控制了，subscribeOn()：指定subscribe()发生的线程，即Observable.onSubscribe()被激活的线程（事件产生），observableOn():指定Subscriber执行的线程，即事件消费的线程;光说不练假把式：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">Observable.just(&quot;1&quot;,&quot;2&quot;,&quot;3&quot;)</div><div class="line">                        .subscribeOn(Schedulers.io())//指定subscribe()执行的线程为io线程</div><div class="line">                        .observeOn(AndroidSchedulers.mainThread())//指定Subscriber回调执行线程为主线程</div><div class="line">                        .map(new Func1&lt;String, Integer&gt;()&#123;</div><div class="line">                            @Override</div><div class="line">                            public Integer call(String s) &#123;</div><div class="line">                                return Integer.valueOf(s);</div><div class="line">                            &#125;</div><div class="line">                        &#125;).subscribe(new Subscriber&lt;Integer&gt;() &#123;</div><div class="line">                    @Override</div><div class="line">                    public void onCompleted() &#123;</div><div class="line">                        Log.d(TAG, &quot;onCompleted: &quot;);</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    @Override</div><div class="line">                    public void onError(Throwable e) &#123;</div><div class="line">                        Log.d(TAG, &quot;onError: &quot;);</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    @Override</div><div class="line">                    public void onNext(Integer integer) &#123;</div><div class="line">                        tv_age.setText(integer+&quot;&quot;);</div><div class="line">                        Log.d(TAG, &quot;onNext: &quot;+integer);</div><div class="line">                    &#125;</div><div class="line">                &#125;);</div></pre></td></tr></table></figure>
+<p>以上代码编写在Androidstudio中，必须添加依赖库：<br><strong>compile ‘io.reactivex:rxjava:1.0.9’</strong><br><strong>compile ‘io.reactivex:rxandroid:1.1.0’</strong></p>
+
+      
+    </div>
+    
+    
+    
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2017/08/21/rxjava/">rxjava</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 luweicheng24 的个人博客">luweicheng24</a></p>
+  <p><span>发布时间:</span>2017年08月21日 - 14:08</p>
+  <p><span>最后更新:</span>2017年08月21日 - 14:08</p>
+  <p><span>原始链接:</span><a href="/2017/08/21/rxjava/" title="rxjava">https://luweicheng24.github.io/2017/08/21/rxjava/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://luweicheng24.github.io/2017/08/21/rxjava/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+
+      
+     </div>
+    
+
+    
+
+    
+	<div>
+    
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------The Artical End<i class="fa fa-paw"></i>Thanks for you read-------------</div>
+    
+</div>
+
+    
+    </div>
+	
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/rxjava/" rel="tag"><i class="fa fa-tag"></i> rxjava</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/21/menu/" rel="next" title="自定义弹出式菜单">
+                <i class="fa fa-chevron-left"></i> 自定义弹出式菜单
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/21/shoping/" rel="prev" title="shoping">
+                shoping <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/header.jpg"
+               alt="luweicheng24" />
+          <p class="site-author-name" itemprop="name">luweicheng24</p>
+           
+              <p class="site-description motion-element" itemprop="description">今天的低头是为了以后更好的抬头</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/luweicheng24" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://my.csdn.net/" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-crosshairs"></i>
+                  
+                    
+                      csdn
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/78c41447b6ff/timeline" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-heartbeat"></i>
+                  
+                    
+                      简书
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">luweicheng24</span>
+</div>
+
+
+<span id="busuanzi_container_site_pv">
+    本站访客数<span id="busuanzi_value_site_uv"></span>次
+</span>
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共12.0k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="true"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2142086"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+ 
+ <script type="text/javascript"
+color="#ccc" opacity='0.7' zIndex="-2" count="120" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>

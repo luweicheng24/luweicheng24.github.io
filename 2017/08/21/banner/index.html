@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="自定义ViewGroup," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="芦苇" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="引言 作为一名Android开发者对于自定义View的掌握体现利润他对控件的深入理解，我下面是自定义ViewGroup实现轮播图；">
+<meta name="keywords" content="自定义ViewGroup">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义轮播图">
+<meta property="og:url" content="https://luweicheng24.github.io/2017/08/21/banner/index.html">
+<meta property="og:site_name" content="芦苇">
+<meta property="og:description" content="引言 作为一名Android开发者对于自定义View的掌握体现利润他对控件的深入理解，我下面是自定义ViewGroup实现轮播图；">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.blog.csdn.net/20170327084841849?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-08-21T06:32:11.075Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自定义轮播图">
+<meta name="twitter:description" content="引言 作为一名Android开发者对于自定义View的掌握体现利润他对控件的深入理解，我下面是自定义ViewGroup实现轮播图；">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170327084841849?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://luweicheng24.github.io/2017/08/21/banner/"/>
+
+
+
+
+
+  <title>自定义轮播图 | 芦苇</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	<a href="https://github.com/luweicheng24"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/c6625ac1f3ee0a12250227cf83ce904423abf351/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">芦苇</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">芦苇的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://luweicheng24.github.io/2017/08/21/banner/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="luweicheng24">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="芦苇">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">自定义轮播图</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-21T14:28:57+08:00">
+                2017-08-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>引言</p>
+<p>作为一名Android开发者对于自定义View的掌握体现利润他对控件的深入理解，我下面是自定义ViewGroup实现轮播图；</p>
+</blockquote>
+<a id="more"></a>
+<blockquote>
+<p>效果图</p>
+</blockquote>
+<p><img src="http://img.blog.csdn.net/20170327084841849?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="轮播图效果图"></p>
+<p>效果图就是这样，自动轮播，可对每张图片进行点击监听，接下来我们先看一下自定义ViewGroup实现实现的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div></pre></td><td class="code"><pre><div class="line">public class ImageBannerViewGroup extends ViewGroup &#123;</div><div class="line">    private int lastX; //滑动的上一次位置</div><div class="line">    private int childerCount; //子控件的个数</div><div class="line">    private int width; //屏幕的宽度</div><div class="line">    private int height; //Banner图的高度</div><div class="line">    private int index = 0; //Banner图索引</div><div class="line">    private int startX; //滑动的起始位置</div><div class="line">    private Timer timer;</div><div class="line">    private List&lt;Integer&gt; banners;</div><div class="line">    private Boolean isClick = true; //是否点击</div><div class="line">    private Boolean isAuto = true; //是否自动轮播</div><div class="line">    private Handler mHandler = new Handler() &#123;</div><div class="line">        @Override</div><div class="line">        public void handleMessage(Message msg) &#123;</div><div class="line">            super.handleMessage(msg);</div><div class="line">            if (msg.what == 0) &#123;</div><div class="line">                if (++index &gt;= childerCount) &#123;</div><div class="line">                    index = 0;</div><div class="line">                &#125;</div><div class="line">                if (bannerDotListener != null) &#123;</div><div class="line">                    bannerDotListener.bannerDotListener(index);</div><div class="line">                &#125;</div><div class="line">                scrollTo(index * width, 0);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    public void setAuto(Boolean isAuto) &#123;</div><div class="line">        this.isAuto = isAuto;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public ImageBannerViewGroup(Context context) &#123;</div><div class="line">        this(context, null);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public ImageBannerViewGroup(Context context, @Nullable AttributeSet attrs) &#123;</div><div class="line">        this(context, attrs, 0);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public ImageBannerViewGroup(Context context, @Nullable AttributeSet attrs, int defStyleAttr) &#123;</div><div class="line">        super(context, attrs, defStyleAttr);</div><div class="line">        timer = new Timer();</div><div class="line">        timer.schedule(new TimerTask() &#123;</div><div class="line">            @Override</div><div class="line">            public void run() &#123;</div><div class="line">                if (isAuto) &#123;</div><div class="line">                    mHandler.sendEmptyMessage(0);</div><div class="line"></div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;, 1000, 3000);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //测量</div><div class="line">    @Override</div><div class="line">    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) &#123;</div><div class="line">        childerCount = getChildCount();</div><div class="line">        if (childerCount == 0) &#123;</div><div class="line">            setMeasuredDimension(0, 0);</div><div class="line">        &#125; else &#123;</div><div class="line">            measureChild(getChildAt(0), widthMeasureSpec, heightMeasureSpec);</div><div class="line">            DisplayMetrics dm = new DisplayMetrics();</div><div class="line">            ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(dm);</div><div class="line">            width = dm.widthPixels;</div><div class="line">            height = dm.heightPixels / 3;//轮播图为手机全屏高度的三分之一</div><div class="line">            setMeasuredDimension(width * childerCount, height);</div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onLayout(boolean changed, int l, int t, int r, int b) &#123;</div><div class="line">        if (changed) &#123;</div><div class="line">            int leftMargin = 0;</div><div class="line">            for (int i = 0; i &lt; childerCount; i++) &#123;</div><div class="line">                View view = getChildAt(i);</div><div class="line">                view.layout(leftMargin, 0, leftMargin + width, height);</div><div class="line">                leftMargin += width;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public boolean onInterceptTouchEvent(MotionEvent ev) &#123;</div><div class="line">        return true;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public boolean onTouchEvent(MotionEvent event) &#123;</div><div class="line">        switch (event.getAction()) &#123;</div><div class="line"></div><div class="line">            case MotionEvent.ACTION_DOWN:</div><div class="line">                isClick = true;</div><div class="line">                isAuto = false;</div><div class="line">                startX = (int) event.getX();</div><div class="line">                break;</div><div class="line">            case MotionEvent.ACTION_MOVE:</div><div class="line">                isClick = false;</div><div class="line">                lastX = (int) event.getX();</div><div class="line">                int offsetX = startX - lastX;</div><div class="line">                if (index == 0 &amp;&amp; offsetX &lt; 0) &#123;</div><div class="line">                    return true;</div><div class="line">                &#125; else if (index == childerCount - 1 &amp;&amp; offsetX &gt; 0) &#123;</div><div class="line">                    return true;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                scrollBy(offsetX, 0);</div><div class="line">                startX = lastX;</div><div class="line">                break;</div><div class="line">            case MotionEvent.ACTION_UP:</div><div class="line">                index = (getScrollX() + width / 2) / width;</div><div class="line">                Log.e(&quot;点击&quot;, &quot;onTouchEvent:click &quot; + isClick);</div><div class="line"></div><div class="line">                if (isClick &amp;&amp; bannerImagClickListener != null) &#123;</div><div class="line">                    bannerImagClickListener.bannerClick(index);</div><div class="line">                    Log.e(&quot;点击&quot;, &quot;onTouchEvent:click &quot; + index);</div><div class="line">                &#125; else &#123;</div><div class="line"></div><div class="line">                    if (index &lt; 0) &#123;</div><div class="line">                        index = 0;</div><div class="line"></div><div class="line">                    &#125; else if (index == childerCount - 1) &#123;</div><div class="line"></div><div class="line">                        index = childerCount - 1;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    if (bannerDotListener != null) &#123;</div><div class="line">                        bannerDotListener.bannerDotListener(index);</div><div class="line">                    &#125;</div><div class="line">                    scrollTo(index * width, 0);</div><div class="line">                    isAuto = true;</div><div class="line">                &#125;</div><div class="line">                break;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">        return true;</div><div class="line"></div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * banner图点击事件回调接口</div><div class="line">     */</div><div class="line">    public interface BannerImagClickListener &#123;</div><div class="line">        void bannerClick(int pos);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private BannerImagClickListener bannerImagClickListener;</div><div class="line"></div><div class="line">    public void setBannerImagClickListener(BannerImagClickListener bannerImagClickListener) &#123;</div><div class="line">        this.bannerImagClickListener = bannerImagClickListener;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * banner图的dot点的滑动监听</div><div class="line">     */</div><div class="line">    public interface BannerDotListener &#123;</div><div class="line">        void bannerDotListener(int pos);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private BannerDotListener bannerDotListener;</div><div class="line"></div><div class="line">    public void setBannerDotListener(BannerDotListener bannerDotListener) &#123;</div><div class="line">        this.bannerDotListener = bannerDotListener;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>虽然代码不多，但是逻辑要理清，对于自定义ViewGroup，分三步走：</p>
+<ol>
+<li>onMeasure（）测量</li>
+<li>onLayout（）布局</li>
+<li>onDraw（）绘制<br>这里我们只用了前两个对父布局和子布局进行了测量和，布置，具体看上面的代码，打了很多注释，多看应该很清楚，这里有个知识点就是ScrollerTo和ScrollerBy的使用规则，其实就是绝对滑动和相对滑动，在ViewGroup中滑动的是子布局，在其他子View中，比如TextView，实现滑动的话，将会是内部内容也就是TextView中的字体进行滑动，还有就是在OnTouchEvent中对触摸事件的判断逻辑，以及在ViewGroup中如何进行事件传递，就是责任链模式，这里我大概说一下ViewGroup中事件的传递，首先在Activity中接收到触摸事件，在ViewGroup中首先对调用自身的onInterceptTouchEvent事件，根据返回的Boolean值判断该事件是否阻断然后自身使用，如果返回False，将调用自身的dispatchTouchEvent来将事件分发给子View，如果是True，将会调用自身的OnTouchEvent来进行事件分类和处理。上面的代码实现了的轮播和点击，没有轮播图下面的索引点的切换，所以我继图片续自定义了一个ViewGroup继承FrameLayout来添加上面的ViewGroup和一个Linearalayout，在LinearLayout中添加索引的指示布局：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div></pre></td><td class="code"><pre><div class="line">package com.gsww.www.scrollertest;</div><div class="line"></div><div class="line">import android.content.Context;</div><div class="line">import android.support.annotation.AttrRes;</div><div class="line">import android.support.annotation.NonNull;</div><div class="line">import android.support.annotation.Nullable;</div><div class="line">import android.util.AttributeSet;</div><div class="line">import android.view.Gravity;</div><div class="line">import android.view.ViewGroup;</div><div class="line">import android.widget.FrameLayout;</div><div class="line">import android.widget.ImageView;</div><div class="line">import android.widget.LinearLayout;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Author : luweicheng on 2017/3/24 0024 16:46</div><div class="line"> * E-mail ：1769005961@qq.com</div><div class="line"> * GitHub : https://github.com/luweicheng24</div><div class="line"> */</div><div class="line"></div><div class="line">public class BannerFrameLayout extends FrameLayout implements ImageBannerViewGroup.BannerDotListener &#123;</div><div class="line">    private ImageBannerViewGroup mImageBannerViewGroup;</div><div class="line">    private LinearLayout mLinearLayout;</div><div class="line"></div><div class="line">    public ImageBannerViewGroup getmImageBannerViewGroup() &#123;</div><div class="line">        return mImageBannerViewGroup;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setmImageBannerViewGroup(ImageBannerViewGroup mImageBannerViewGroup) &#123;</div><div class="line">        this.mImageBannerViewGroup = mImageBannerViewGroup;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public LinearLayout getmLinearLayout() &#123;</div><div class="line">        return mLinearLayout;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setmLinearLayout(LinearLayout mLinearLayout) &#123;</div><div class="line">        this.mLinearLayout = mLinearLayout;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private Integer[] banners;</div><div class="line"></div><div class="line">    public BannerFrameLayout(@NonNull Context context) &#123;</div><div class="line">        this(context, null);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public BannerFrameLayout(@NonNull Context context, @Nullable AttributeSet attrs) &#123;</div><div class="line">        this(context, attrs, 0);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public BannerFrameLayout(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) &#123;</div><div class="line">        super(context, attrs, defStyleAttr);</div><div class="line">        initDragView();</div><div class="line">        initLinearLayout();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 设置Banner图的集合</div><div class="line">     *</div><div class="line">     * @param banners</div><div class="line">     * @param screenWidth  屏幕宽度</div><div class="line">     * @param screenHeight 屏幕高度</div><div class="line">     */</div><div class="line">    public void addBanners(final Integer[] banners, int screenWidth, int screenHeight) &#123;</div><div class="line">        this.banners = banners;</div><div class="line">        for (int i = 0; i &lt; banners.length; i++) &#123;</div><div class="line">            ImageView img = new ImageView(getContext());</div><div class="line">            img.setBackgroundResource(banners[i]);</div><div class="line">            img.setId(i);</div><div class="line">            ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(screenWidth * banners.length, screenHeight / 4);</div><div class="line">            img.setScaleType(ImageView.ScaleType.CENTER_CROP);</div><div class="line">            img.setLayoutParams(lp);</div><div class="line">            mImageBannerViewGroup.addView(img);</div><div class="line">        &#125;</div><div class="line">        addDotToLinearLayout(banners.length);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void addDotToLinearLayout(int dotCount) &#123;</div><div class="line">        for (int i = 0; i &lt; dotCount; i++) &#123;</div><div class="line">            ImageView dot = new ImageView(getContext());</div><div class="line">            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);</div><div class="line">            lp.setMargins(5, 0, 0, 0);</div><div class="line">            dot.setBackgroundResource(R.drawable.dot_drawable);</div><div class="line">            dot.setLayoutParams(lp);</div><div class="line">            mLinearLayout.addView(dot);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    private void initLinearLayout() &#123;</div><div class="line">        mLinearLayout = new LinearLayout(getContext());</div><div class="line">        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100);</div><div class="line">        lp.gravity = Gravity.BOTTOM;</div><div class="line">        mLinearLayout.setLayoutParams(lp);</div><div class="line">        mLinearLayout.setGravity(Gravity.CENTER);</div><div class="line"></div><div class="line">        addView(mLinearLayout);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void initDragView() &#123;</div><div class="line">        mImageBannerViewGroup = new ImageBannerViewGroup(getContext());</div><div class="line">        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);</div><div class="line">        mImageBannerViewGroup.setLayoutParams(lp);</div><div class="line">        addView(mImageBannerViewGroup);</div><div class="line">        mImageBannerViewGroup.setBannerDotListener(this);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void bannerDotListener(int pos) &#123;</div><div class="line">        for (int i = 0; i &lt; mLinearLayout.getChildCount(); i++) &#123;</div><div class="line">            if (pos == i) &#123;</div><div class="line">                ImageView img = (ImageView) mLinearLayout.getChildAt(i);</div><div class="line">                img.setBackgroundResource(R.drawable.dot_select);</div><div class="line">            &#125; else &#123;</div><div class="line">                ImageView img = (ImageView) mLinearLayout.getChildAt(i);</div><div class="line">                img.setBackgroundResource(R.drawable.dot_no_select);</div><div class="line"></div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在自定义FrameLayout中我初始化了图片轮播的ViewGroup和索引布局LinearLayout，在使用的时候如下布局和使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;com.gsww.www.scrollertest.BannerFrameLayout</div><div class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">    android:id=&quot;@+id/mBannerFrameLayout&quot;</div><div class="line">    android:layout_width=&quot;match_parent&quot;</div><div class="line">    android:layout_height=&quot;wrap_content&quot;&gt;</div><div class="line">&lt;/com.gsww.www.scrollertest.BannerFrameLayout&gt;</div><div class="line"></div><div class="line"></div><div class="line">package com.gsww.www.scrollertest;</div><div class="line"></div><div class="line">import android.os.Bundle;</div><div class="line">import android.support.v7.app.AppCompatActivity;</div><div class="line">import android.util.DisplayMetrics;</div><div class="line">import android.widget.Toast;</div><div class="line"></div><div class="line">public class MainActivity extends AppCompatActivity implements ImageBannerViewGroup.BannerImagClickListener &#123;</div><div class="line">    private BannerFrameLayout banner;</div><div class="line">    private Integer[] imgs = &#123;R.drawable.girl_3, R.drawable.girl_5, R.drawable.girl_6,</div><div class="line">            R.drawable.girl_4, R.drawable.girl_7, R.drawable.girl_9&#125;;</div><div class="line">    private int screenWidth;</div><div class="line">    private int screenHeight;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        getSupportActionBar().hide();</div><div class="line">        setContentView(R.layout.main);</div><div class="line">        banner = (BannerFrameLayout) findViewById(R.id.mBannerFrameLayout);</div><div class="line">        DisplayMetrics dm = new DisplayMetrics();</div><div class="line">        getWindowManager().getDefaultDisplay().getMetrics(dm);</div><div class="line">        screenWidth = dm.widthPixels;</div><div class="line">        screenHeight = dm.heightPixels;</div><div class="line">        banner.addBanners(imgs, screenWidth, screenHeight);</div><div class="line">        banner.getmImageBannerViewGroup().setBannerImagClickListener(this);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void bannerClick(int pos) &#123;</div><div class="line">        Toast.makeText(this, &quot;&quot;+pos, Toast.LENGTH_SHORT).show();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>好了，自定义轮播图就这样完成了，<a href="https://github.com/luweicheng24/ScrollerBanners" target="_blank" rel="external">源码点击下载</a></p>
+
+      
+    </div>
+    
+    
+    
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2017/08/21/banner/">自定义轮播图</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 luweicheng24 的个人博客">luweicheng24</a></p>
+  <p><span>发布时间:</span>2017年08月21日 - 14:08</p>
+  <p><span>最后更新:</span>2017年08月21日 - 14:08</p>
+  <p><span>原始链接:</span><a href="/2017/08/21/banner/" title="自定义轮播图">https://luweicheng24.github.io/2017/08/21/banner/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://luweicheng24.github.io/2017/08/21/banner/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+
+      
+     </div>
+    
+
+    
+
+    
+	<div>
+    
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------The Artical End<i class="fa fa-paw"></i>Thanks for you read-------------</div>
+    
+</div>
+
+    
+    </div>
+	
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/自定义ViewGroup/" rel="tag"><i class="fa fa-tag"></i> 自定义ViewGroup</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/21/踩黑块/" rel="next" title="踩黑块">
+                <i class="fa fa-chevron-left"></i> 踩黑块
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/21/load-circle/" rel="prev" title="load_circle">
+                load_circle <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/header.jpg"
+               alt="luweicheng24" />
+          <p class="site-author-name" itemprop="name">luweicheng24</p>
+           
+              <p class="site-description motion-element" itemprop="description">今天的低头是为了以后更好的抬头</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/luweicheng24" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://my.csdn.net/" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-crosshairs"></i>
+                  
+                    
+                      csdn
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/78c41447b6ff/timeline" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-heartbeat"></i>
+                  
+                    
+                      简书
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">luweicheng24</span>
+</div>
+
+
+<span id="busuanzi_container_site_pv">
+    本站访客数<span id="busuanzi_value_site_uv"></span>次
+</span>
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共12.0k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="true"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2142086"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+ 
+ <script type="text/javascript"
+color="#ccc" opacity='0.7' zIndex="-2" count="120" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>

@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="自定义View," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="芦苇" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="引言 功能来源于需求 ，给我一盒画笔，我将画出整个世界。  本篇记录一次自定义类似加速球的自定义实现：  效果图">
+<meta name="keywords" content="自定义View">
+<meta property="og:type" content="article">
+<meta property="og:title" content="load_circle">
+<meta property="og:url" content="https://luweicheng24.github.io/2017/08/21/load-circle/index.html">
+<meta property="og:site_name" content="芦苇">
+<meta property="og:description" content="引言 功能来源于需求 ，给我一盒画笔，我将画出整个世界。  本篇记录一次自定义类似加速球的自定义实现：  效果图">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.blog.csdn.net/20170801101147935?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170801102632645?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170801103127617?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2198310-06ae6f9ad5309b7f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-08-21T06:34:57.422Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="load_circle">
+<meta name="twitter:description" content="引言 功能来源于需求 ，给我一盒画笔，我将画出整个世界。  本篇记录一次自定义类似加速球的自定义实现：  效果图">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170801101147935?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://luweicheng24.github.io/2017/08/21/load-circle/"/>
+
+
+
+
+
+  <title>load_circle | 芦苇</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	<a href="https://github.com/luweicheng24"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/c6625ac1f3ee0a12250227cf83ce904423abf351/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">芦苇</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">芦苇的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://luweicheng24.github.io/2017/08/21/load-circle/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="luweicheng24">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="芦苇">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">load_circle</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-21T14:33:01+08:00">
+                2017-08-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>引言</p>
+<p>功能来源于需求 ，给我一盒画笔，我将画出整个世界。</p>
+</blockquote>
+<p>本篇记录一次自定义类似加速球的自定义实现：</p>
+<ul>
+<li>效果图<br><img src="http://img.blog.csdn.net/20170801101147935?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><a id="more"></a></li>
+<li>具体实现<br> 为了实现这样的一个效果，就必须自定义View，进行自定义布局初始   化以及定义变量等：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div></pre></td><td class="code"><pre><div class="line">private Paint mPaint; //基本画笔</div><div class="line">  private Paint textPaint; //文字画笔</div><div class="line">  private Path path; //路径</div><div class="line">  private int mWidth = DimentionUtils.px2Dp(getContext(), 50); //默认的view的宽度</div><div class="line">  private int mHeight = DimentionUtils.px2Dp(getContext(), 50);//默认view的高度</div><div class="line">  private int textSize = DimentionUtils.px2Sp(getContext(), 10);//默认文字的大小</div><div class="line">  private String content = &quot;卢&quot;;//文字内容</div><div class="line">  private float curPercent; //波浪线水平移动的速率</div><div class="line">  private int color; //文字颜色(默认颜色为红色)</div><div class="line">  private float ratio = 0.5f;// 波浪的高度与view的比值，默认0.5</div><div class="line"></div><div class="line">  public WaveLoadCircle(Context context) &#123;</div><div class="line">      this(context, null);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  public WaveLoadCircle(Context context, @Nullable AttributeSet attrs) &#123;</div><div class="line">      this(context, attrs, 0);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  public WaveLoadCircle(Context context, @Nullable AttributeSet attrs, int defStyleAttr) &#123;</div><div class="line">      super(context, attrs, defStyleAttr);</div><div class="line">      init(attrs);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) &#123;</div><div class="line">      super.onMeasure(widthMeasureSpec, heightMeasureSpec);</div><div class="line">      int widthMode = MeasureSpec.getMode(widthMeasureSpec);</div><div class="line">      int width = MeasureSpec.getSize(widthMeasureSpec);</div><div class="line">      int heightMode = MeasureSpec.getMode(heightMeasureSpec);</div><div class="line">      int height = MeasureSpec.getSize(heightMeasureSpec);</div><div class="line">      if (widthMode == MeasureSpec.EXACTLY) &#123;// 确定值或者match_parent</div><div class="line">          mWidth = width;</div><div class="line">      &#125;</div><div class="line">      if (heightMode == MeasureSpec.EXACTLY) &#123;</div><div class="line">          mHeight = height;</div><div class="line">      &#125;</div><div class="line">      setMeasuredDimension(mWidth, mHeight);</div><div class="line">      textSize = mWidth / 4;//文字大小为宽度的四分之一</div><div class="line">      textPaint.setTextSize(textSize);</div><div class="line">  &#125;</div><div class="line">/**</div><div class="line">   * 初始化画笔和路径</div><div class="line">   *</div><div class="line">   * @param attr</div><div class="line">   */</div><div class="line">  private void init(AttributeSet attr) &#123;</div><div class="line">      TypedArray arr = getContext().obtainStyledAttributes(attr, R.styleable.WaveLoadCircle);</div><div class="line">      //自定义颜色和文字，默认蓝色</div><div class="line">      int c = arr.getColor(R.styleable.WaveLoadCircle_color, Color.BLUE);</div><div class="line">      String text = arr.getString(R.styleable.WaveLoadCircle_text);</div><div class="line">      if (c != 0) &#123;</div><div class="line">          Log.i(&quot;tag&quot;, &quot;init:color &quot; + c);</div><div class="line">          color = c;</div><div class="line">      &#125;</div><div class="line">      if (text != null) &#123;</div><div class="line">          content = text;</div><div class="line">          Log.i(&quot;tag&quot;, &quot;init:text &quot; + text);</div><div class="line"></div><div class="line">      &#125;</div><div class="line">      arr.recycle();//回收资源</div><div class="line"></div><div class="line">      //初始化画笔</div><div class="line">      mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);//去除锯齿</div><div class="line">      mPaint.setDither(true);</div><div class="line">      mPaint.setStyle(Paint.Style.FILL);//填充</div><div class="line">      mPaint.setColor(color);</div><div class="line"></div><div class="line">      //初始化文字画笔</div><div class="line">      textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);//反锯齿标志</div><div class="line">      textPaint.setColor(color);</div><div class="line">      textPaint.setStyle(Paint.Style.FILL);</div><div class="line">      textPaint.setDither(true);</div><div class="line"></div><div class="line">      //闭合的波浪路径</div><div class="line">      path = new Path();</div><div class="line">    </div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>自定义属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;resources&gt;</div><div class="line">    &lt;declare-styleable name=&quot;WaveLoadCircle&quot;&gt;</div><div class="line">        &lt;attr name=&quot;color&quot; format=&quot;color&quot;/&gt;</div><div class="line">        &lt;attr name=&quot;text&quot; format=&quot;string&quot;/&gt;</div><div class="line">    &lt;/declare-styleable&gt;</div><div class="line">    </div><div class="line">&lt;/resources&gt;</div></pre></td></tr></table></figure>
+<p>实现这样的View是通过Canvas、Paint、Path来画了四层效果图将其叠加在一起：</p>
+<p><img src="http://img.blog.csdn.net/20170801102632645?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>那么首先就是画最底下那个文字，这里有个问题就是如何将文字画到画布的中间呢，下面的这句代码其实只是对齐了x轴，也就是水平居中了，所以就是如何才能让其垂直居中呢，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Rect rect = new Rect(0, 0, mWidth, mHeight);</div><div class="line">paint.setTextAlign(Paint.Align.CENTER);</div></pre></td></tr></table></figure>
+<p>先来看一个文字绘制时如何的定位：</p>
+<p><img src="http://img.blog.csdn.net/20170801103127617?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>所以，文字的y轴居中坐标:centerY = (画布高度 - 字体.assent - 字体.descent)/2，这样画到画布的文字才会居中显示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">     * 为了将文字画在画布的中央，centerY = (画布高度 - 字体.assent - 字体.descent)/2</div><div class="line">     *</div><div class="line">     * @param canvas</div><div class="line">     * @param paint</div><div class="line">     */</div><div class="line">    private void drawCentertext(Canvas canvas, Paint paint) &#123;</div><div class="line">        Rect rect = new Rect(0, 0, mWidth, mHeight);</div><div class="line">        paint.setTextAlign(Paint.Align.CENTER);</div><div class="line">        Paint.FontMetrics pf = paint.getFontMetrics();</div><div class="line">        int centerY = (int) ((mHeight - pf.ascent - pf.descent) / 2);</div><div class="line">        canvas.drawText(content, rect.centerX(), centerY, paint);</div><div class="line"></div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>最底下的文字画好以后，就是第二层画波浪线，利用Path来完成这个使命，示意图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2198310-06ae6f9ad5309b7f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="这里写图片描述"></p>
+<p>图中的灰色就是我们的画布，为了能够实现波浪的波动，因为Path中没有画sin 或者 cos的曲线，所以就选择用贝塞尔曲线来画一段曲线。要想实现波浪的波动，图中左边的起点会不断向右滑动，所以绘制一个上边是图中所示的闭合矩形：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">/**</div><div class="line"> * 绘制一个上边是由4段二阶贝塞尔曲线的矩形，区间位置-mWidth ~ mWidth</div><div class="line"> *</div><div class="line"> * @param percent</div><div class="line"> * @return</div><div class="line"> */</div><div class="line">public Path getWavePath(float percent) &#123;</div><div class="line">    Path path = new Path();</div><div class="line">    float x = -mWidth * percent;</div><div class="line">    path.moveTo(x, mHeight * (1 - ratio));</div><div class="line">    //控制点的相对宽度</div><div class="line">    int qWidth = mWidth / 4;</div><div class="line">    //控制点的相对高度</div><div class="line">    int qHeight = qWidth / 2;</div><div class="line">    //第一个波浪</div><div class="line">    path.rQuadTo(qWidth, qHeight, qWidth * 2, 0);</div><div class="line">    path.rQuadTo(qWidth, -qHeight, qWidth * 2, 0);</div><div class="line">    //第二个波浪</div><div class="line">    path.rQuadTo(qWidth, qHeight, qWidth * 2, 0);</div><div class="line">    path.rQuadTo(qWidth, -qHeight, qWidth * 2, 0);</div><div class="line">    //右侧的直线</div><div class="line">    path.lineTo(x + mWidth * 2, mHeight);</div><div class="line"></div><div class="line">    path.lineTo(x, mHeight);</div><div class="line">    //自动闭合补出左边的直线</div><div class="line">    path.close();</div><div class="line">    return path;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>接着裁剪该path的闭合路径：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// 获取path路径为一个上边为贝塞尔曲线的矩形</div><div class="line">        path = getWavePath(curPercent);</div><div class="line">        Log.i(&quot;tag&quot;, &quot;onDraw:percent &quot; + curPercent);</div><div class="line">        // 在画布上面裁剪该path</div><div class="line">        canvas.clipPath(path);</div></pre></td></tr></table></figure>
+<p>在裁剪后的画布上面画圆（画圆的画笔颜色是波浪的颜色）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// 画圆</div><div class="line">      canvas.drawCircle(mWidth / 2, mHeight / 2, mWidth / 2, mPaint);</div></pre></td></tr></table></figure>
+<p>最后一层就是再画一个文字和最底层文字一样，但是颜色为白色的文字：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">textPaint.setColor(Color.WHITE);</div><div class="line">       // 再画一个颜色与上面字体颜色不一样的字</div><div class="line">       drawCentertext(canvas, textPaint);</div></pre></td></tr></table></figure>
+<p>通过ValueAnimator来设置波浪的移动距离：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">// 波浪水平移动的速率</div><div class="line">      ValueAnimator anim = ValueAnimator.ofFloat(0, 1);</div><div class="line">      anim.setDuration(1000);</div><div class="line">      anim.setRepeatCount(ValueAnimator.INFINITE); // 无限重复</div><div class="line">      anim.setRepeatMode(ValueAnimator.RESTART);//重头再来</div><div class="line">      anim.setInterpolator(new LinearInterpolator());</div><div class="line">      anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() &#123;</div><div class="line">          @Override</div><div class="line">          public void onAnimationUpdate(ValueAnimator animation) &#123;</div><div class="line">              curPercent = animation.getAnimatedFraction();// 将0~1 的动画值不断得赋值当前的进度</div><div class="line">              Log.i(&quot;tag&quot;, &quot;onAnimationUpdate: &quot; + curPercent);</div><div class="line">              invalidate();</div><div class="line">          &#125;</div><div class="line">      &#125;);</div><div class="line">      anim.start();</div></pre></td></tr></table></figure>
+<p>添加一个设置波浪高度的方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">     * 设置波浪的高度与view高度的比值（0f ~ 1f）</div><div class="line">     *</div><div class="line">     * @param ratio</div><div class="line">     */</div><div class="line">    public void setWaveHeightRatio(float ratio) &#123;</div><div class="line">        this.ratio = ratio;</div><div class="line">        invalidate();</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>好了，基本流程就是这样。<a href="https://github.com/luweicheng24/CircleWaveLoad" target="_blank" rel="external">github源码链接</a></p>
+
+      
+    </div>
+    
+    
+    
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2017/08/21/load-circle/">load_circle</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 luweicheng24 的个人博客">luweicheng24</a></p>
+  <p><span>发布时间:</span>2017年08月21日 - 14:08</p>
+  <p><span>最后更新:</span>2017年08月21日 - 14:08</p>
+  <p><span>原始链接:</span><a href="/2017/08/21/load-circle/" title="load_circle">https://luweicheng24.github.io/2017/08/21/load-circle/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://luweicheng24.github.io/2017/08/21/load-circle/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+
+      
+     </div>
+    
+
+    
+
+    
+	<div>
+    
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------The Artical End<i class="fa fa-paw"></i>Thanks for you read-------------</div>
+    
+</div>
+
+    
+    </div>
+	
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/自定义View/" rel="tag"><i class="fa fa-tag"></i> 自定义View</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/21/banner/" rel="next" title="自定义轮播图">
+                <i class="fa fa-chevron-left"></i> 自定义轮播图
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/21/面试/" rel="prev" title="记一次挑战15k的编程记录">
+                记一次挑战15k的编程记录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/header.jpg"
+               alt="luweicheng24" />
+          <p class="site-author-name" itemprop="name">luweicheng24</p>
+           
+              <p class="site-description motion-element" itemprop="description">今天的低头是为了以后更好的抬头</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/luweicheng24" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://my.csdn.net/" target="_blank" title="csdn">
+                  
+                    <i class="fa fa-fw fa-crosshairs"></i>
+                  
+                    
+                      csdn
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/78c41447b6ff/timeline" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-heartbeat"></i>
+                  
+                    
+                      简书
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">luweicheng24</span>
+</div>
+
+
+<span id="busuanzi_container_site_pv">
+    本站访客数<span id="busuanzi_value_site_uv"></span>次
+</span>
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共12.0k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="true"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2142086"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+ 
+ <script type="text/javascript"
+color="#ccc" opacity='0.7' zIndex="-2" count="120" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
