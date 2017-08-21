@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://luweicheng24.github.io/"/>
-  <updated>2017-08-21T06:21:22.687Z</updated>
+  <updated>2017-08-21T06:25:28.752Z</updated>
   <id>https://luweicheng24.github.io/</id>
   
   <author>
@@ -20,15 +20,11 @@
     <link href="https://luweicheng24.github.io/2017/08/21/%E8%B8%A9%E9%BB%91%E5%9D%97/"/>
     <id>https://luweicheng24.github.io/2017/08/21/踩黑块/</id>
     <published>2017-08-21T06:12:29.000Z</published>
-    <updated>2017-08-21T06:21:22.687Z</updated>
+    <updated>2017-08-21T06:25:28.752Z</updated>
     
-    <content type="html"><![CDATA[<blockquote>
-<p>引言 </p>
-<p> 踩白块是目前一款很流行的单机游戏，而由于个人不是做游戏的，所以利用了Android的原生的界面绘制出一款类似的踩白块游戏，通过自定义ViewGroup中不断的去创建子View(方块)，开始单独的线程不断进行界面的绘制造成一种不断方块下滑的效果：</p>
-</blockquote>
-<a id="more"></a>
-<p>这篇文章通过自定义ViewGroup实现前段时间挺火的一个游戏——别踩白块。好了先看一下效果图：</p>
+    <content type="html"><![CDATA[<p>这篇文章通过自定义ViewGroup实现前段时间挺火的一个游戏——别踩白块。好了先看一下效果图：</p>
 <p><img src="http://img.blog.csdn.net/20170503141750007?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<a id="more"></a>
 <p>好了，下面我说一下我的思路，大家都知道重写ViewGroup的步骤：onMesure()，onDraw( ),onLayout(),这里我只需要重写onDraw（）和onTouchEvent（）；好了，我首先创建的一个矩形类继承RectF类，创建了误了静态常量和两个构造函数：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">import android.graphics.RectF;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Author   : luweicheng on 2017/4/30 0030 12:16</div><div class="line"> * E-mail   ：1769005961@qq.com</div><div class="line"> * GitHub   : https://github.com/luweicheng24</div><div class="line"> * funcation: 矩形框类</div><div class="line"> */</div><div class="line"></div><div class="line">public class PiecesRectF extends RectF &#123;</div><div class="line"></div><div class="line">    private int type;</div><div class="line"></div><div class="line">    public final static int BLAKE = 0;//黑块</div><div class="line">    public final static int WRITE = 1;//白块</div><div class="line">    public final static int BLUE = 2;//黑块按下时的显示蓝块</div><div class="line">    public final static int START = 3;//标记有开始的黑块</div><div class="line">    public final static int RED = 4;//按到白块，或有黑块漏按，游戏结束时的红块</div><div class="line"></div><div class="line">    public PiecesRectF()&#123;</div><div class="line">        super();</div><div class="line">        type = Math.random() &gt; 0.5 ? 0:1;//初始化时，给type随机一个白块或黑块</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 创建最后一行的矩形</div><div class="line">     * @param isLast</div><div class="line">     */</div><div class="line">    public PiecesRectF(Boolean isLast)&#123;</div><div class="line">        super();</div><div class="line">    &#125;</div><div class="line">    public void setType(int type) &#123;</div><div class="line">        this.type = type;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public int getType() &#123;</div><div class="line">        return type;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>该类对象就想到于每个矩形框，类型有五种类型，注释也已经写的很清楚了。下面我们就来继承ViewGroup来自定义我们的ViewGroup：继承之后我们先来对初始化五行四列的二维数组来存放矩形框,由于第五行的矩形框要作为开始按钮，所以单独创建了第五行，第五行只有一个类型的开始的矩形框，其他的都是类型为白色的矩形框：</p>
@@ -49,17 +45,15 @@
     
     <summary type="html">
     
-      &lt;blockquote&gt;
-&lt;p&gt;引言 &lt;/p&gt;
-&lt;p&gt; 踩白块是目前一款很流行的单机游戏，而由于个人不是做游戏的，所以利用了Android的原生的界面绘制出一款类似的踩白块游戏，通过自定义ViewGroup中不断的去创建子View(方块)，开始单独的线程不断进行界面的绘制造成一种不断方块下滑的效果：&lt;/p&gt;
-&lt;/blockquote&gt;
+      &lt;p&gt;这篇文章通过自定义ViewGroup实现前段时间挺火的一个游戏——别踩白块。好了先看一下效果图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://img.blog.csdn.net/20170503141750007?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast&quot; alt=&quot;这里写图片描述&quot;&gt;&lt;/p&gt;
     
     </summary>
     
       <category term="Android" scheme="https://luweicheng24.github.io/categories/Android/"/>
     
     
-      <category term="View" scheme="https://luweicheng24.github.io/tags/View/"/>
+      <category term="自定义ViewGroup" scheme="https://luweicheng24.github.io/tags/%E8%87%AA%E5%AE%9A%E4%B9%89ViewGroup/"/>
     
   </entry>
   
