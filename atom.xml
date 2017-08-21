@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>芦苇</title>
-  
+  <subtitle>芦苇的博客</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://luweicheng24.github.io/"/>
-  <updated>2017-08-12T13:27:48.792Z</updated>
+  <updated>2017-08-21T02:48:05.008Z</updated>
   <id>https://luweicheng24.github.io/</id>
   
   <author>
@@ -16,13 +16,23 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>My New Post</title>
+    <title>你真的准备好了吗？</title>
     <link href="https://luweicheng24.github.io/2017/08/12/My-New-Post/"/>
     <id>https://luweicheng24.github.io/2017/08/12/My-New-Post/</id>
     <published>2017-08-12T13:27:48.000Z</published>
-    <updated>2017-08-12T13:27:48.792Z</updated>
+    <updated>2017-08-21T02:48:05.008Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="第一篇文章"><a href="#第一篇文章" class="headerlink" title="第一篇文章"></a>第一篇文章</h3><blockquote>
+<p>如何正确编写markDown</p>
+</blockquote>
+]]></content>
     
     <summary type="html">
+    
+      &lt;h3 id=&quot;第一篇文章&quot;&gt;&lt;a href=&quot;#第一篇文章&quot; class=&quot;headerlink&quot; title=&quot;第一篇文章&quot;&gt;&lt;/a&gt;第一篇文章&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;如何正确编写markDown&lt;/p&gt;
+&lt;/blockquote&gt;
+
     
     </summary>
     
