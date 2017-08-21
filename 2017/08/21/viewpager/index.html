@@ -96,19 +96,19 @@
 
 
 
-<meta name="description" content="###ViewPager实现轮播图对于轮播图的实现，我上次已经在博客中通过自定义ViewGroup实现了，不过过程比较复杂，设置到动画以及图片位置的计算，今天通过Android原生的ViewPager来实现开一个效果比较好的轮播图，">
+<meta name="description" content="ViewPager实现轮播图对于轮播图的实现，我上次已经在博客中通过自定义ViewGroup实现了，不过过程比较复杂，设置到动画以及图片位置的计算，今天通过Android原生的ViewPager来实现开一个效果比较好的轮播图，">
 <meta name="keywords" content="android轮播图">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ViewPager实现轮播图">
 <meta property="og:url" content="https://luweicheng24.github.io/2017/08/21/viewpager/index.html">
 <meta property="og:site_name" content="芦苇">
-<meta property="og:description" content="###ViewPager实现轮播图对于轮播图的实现，我上次已经在博客中通过自定义ViewGroup实现了，不过过程比较复杂，设置到动画以及图片位置的计算，今天通过Android原生的ViewPager来实现开一个效果比较好的轮播图，">
+<meta property="og:description" content="ViewPager实现轮播图对于轮播图的实现，我上次已经在博客中通过自定义ViewGroup实现了，不过过程比较复杂，设置到动画以及图片位置的计算，今天通过Android原生的ViewPager来实现开一个效果比较好的轮播图，">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://img.blog.csdn.net/20170616094436328?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2017-08-21T06:48:11.837Z">
+<meta property="og:updated_time" content="2017-08-21T07:11:18.733Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ViewPager实现轮播图">
-<meta name="twitter:description" content="###ViewPager实现轮播图对于轮播图的实现，我上次已经在博客中通过自定义ViewGroup实现了，不过过程比较复杂，设置到动画以及图片位置的计算，今天通过Android原生的ViewPager来实现开一个效果比较好的轮播图，">
+<meta name="twitter:description" content="ViewPager实现轮播图对于轮播图的实现，我上次已经在博客中通过自定义ViewGroup实现了，不过过程比较复杂，设置到动画以及图片位置的计算，今天通过Android原生的ViewPager来实现开一个效果比较好的轮播图，">
 <meta name="twitter:image" content="http://img.blog.csdn.net/20170616094436328?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 
@@ -351,7 +351,7 @@
       
 
       
-        <p>###ViewPager实现轮播图<br>对于轮播图的实现，我上次已经在博客中通过自定义ViewGroup实现了，不过过程比较复杂，设置到动画以及图片位置的计算，今天通过Android原生的ViewPager来实现开一个效果比较好的轮播图，<br><a id="more"></a><br>先上个效果图：<br><img src="http://img.blog.csdn.net/20170616094436328?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="轮播图"><br>在实现之前在ViewGroup中有个属性值：clipChilder=”true|false”这个值默认是true，就是当父布局设置为true时，子控件设置的宽和高都必须裁剪成和父布局一样大，但是设置为false时，子控件如过设置的比父控件小，多出的部分将不展示其他控件，在ViewPager中如果固定好了Viewpager的宽，设置margin给左右两边之后，两边将会显示ViewPager中的其他视图，下面是ViewPager的布局：</p>
+        <p>ViewPager实现轮播图<br>对于轮播图的实现，我上次已经在博客中通过自定义ViewGroup实现了，不过过程比较复杂，设置到动画以及图片位置的计算，今天通过Android原生的ViewPager来实现开一个效果比较好的轮播图，<br><a id="more"></a><br>先上个效果图：<br><img src="http://img.blog.csdn.net/20170616094436328?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="轮播图"><br>在实现之前在ViewGroup中有个属性值：clipChilder=”true|false”这个值默认是true，就是当父布局设置为true时，子控件设置的宽和高都必须裁剪成和父布局一样大，但是设置为false时，子控件如过设置的比父控件小，多出的部分将不展示其他控件，在ViewPager中如果固定好了Viewpager的宽，设置margin给左右两边之后，两边将会显示ViewPager中的其他视图，下面是ViewPager的布局：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;RelativeLayout</div><div class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</div><div class="line">    android:layout_height=&quot;match_parent&quot;</div><div class="line">    android:layout_width=&quot;match_parent&quot;</div><div class="line">    android:orientation=&quot;horizontal&quot;</div><div class="line">    android:clipChildren=&quot;false&quot;</div><div class="line">    &gt;</div><div class="line">  &lt;ImageView</div><div class="line">      android:id=&quot;@+id/img_bg&quot;</div><div class="line">      android:layout_width=&quot;match_parent&quot;</div><div class="line">      android:layout_height=&quot;match_parent&quot; /&gt;</div><div class="line">  &lt;android.support.v4.view.ViewPager</div><div class="line">      android:id=&quot;@+id/viewPager&quot;</div><div class="line">      android:layout_centerInParent=&quot;true&quot;</div><div class="line">      android:layout_width=&quot;match_parent&quot;</div><div class="line">      android:layout_height=&quot;350dp&quot;</div><div class="line">      android:layout_marginLeft=&quot;55dp&quot;</div><div class="line">      android:layout_marginRight=&quot;55dp&quot;</div><div class="line">      &gt;</div><div class="line"></div><div class="line">  &lt;/android.support.v4.view.ViewPager&gt;</div><div class="line"></div><div class="line">&lt;/RelativeLayout&gt;</div></pre></td></tr></table></figure>
 <p>在布局中这样设置后屏幕就会出现ViewPager中的三个视图，中间最大，两边只是视图的一部分，然后就是如何实现两边的视图高度比中间的小，通过滑动到中间时高度又增加，这是通过自定义ViewPager.PagerTransform来实现的，该类中包含一个方法 public void transformPage(View page, float position)，该方法实在ViewPager中视图滑动时调用，其中的position当取值范围分为三个阶段：(-视图个数 ， -1)，[-1,1] ,(1,视图个数);其中第一个取值表示当视图从中间滑到坐边时，第二个表示视图从右边滑动到中间时，第三个表示视图从右边滑到右边可是框内时调用，核心代码如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public static final float MIN_SCALE = 0.6f;</div><div class="line">        @Override</div><div class="line">        public void transformPage(View page, float position) &#123;</div><div class="line">            if(position&lt;-1)&#123;</div><div class="line">                page.setScaleY(MIN_SCALE);</div><div class="line">                page.setAlpha(MIN_SCALE);</div><div class="line">            &#125;else if(position&lt;=1)&#123;</div><div class="line">                float scale = Math.max(MIN_SCALE,1-Math.abs(position));</div><div class="line">                page.setScaleY(scale);</div><div class="line">                page.setAlpha(scale);</div><div class="line">            &#125;else &#123;</div><div class="line">                page.setScaleY(MIN_SCALE);</div><div class="line">                page.setAlpha(MIN_SCALE);</div><div class="line"></div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div></pre></td></tr></table></figure>
@@ -381,7 +381,7 @@
   <p><span>本文标题:</span><a href="/2017/08/21/viewpager/">ViewPager实现轮播图</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 luweicheng24 的个人博客">luweicheng24</a></p>
   <p><span>发布时间:</span>2017年08月21日 - 14:08</p>
-  <p><span>最后更新:</span>2017年08月21日 - 14:08</p>
+  <p><span>最后更新:</span>2017年08月21日 - 15:08</p>
   <p><span>原始链接:</span><a href="/2017/08/21/viewpager/" title="ViewPager实现轮播图">https://luweicheng24.github.io/2017/08/21/viewpager/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://luweicheng24.github.io/2017/08/21/viewpager/"  aria-label="复制成功！"></i></span>
   </p>

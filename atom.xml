@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://luweicheng24.github.io/"/>
-  <updated>2017-08-21T07:00:41.850Z</updated>
+  <updated>2017-08-21T07:10:59.076Z</updated>
   <id>https://luweicheng24.github.io/</id>
   
   <author>
@@ -16,15 +16,14 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>shoping</title>
+    <title>商品购物动画</title>
     <link href="https://luweicheng24.github.io/2017/08/21/shoping/"/>
     <id>https://luweicheng24.github.io/2017/08/21/shoping/</id>
     <published>2017-08-21T06:56:25.000Z</published>
-    <updated>2017-08-21T07:00:41.850Z</updated>
+    <updated>2017-08-21T07:10:59.076Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
-<p>引言</p>
-<p>对于android人员来说，肯定接触过电商类的app开发，而商品的添加动画会让用户体验提升一大截。</p>
+<p>引言<br>对于android人员来说，肯定接触过电商类的app开发，而商品的添加动画会让用户体验提升一大截。</p>
 </blockquote>
 <p>下面我给大家介绍一下如何制作商品的添加动画，先来看一下效果图：<br>怎么样，是不是还不错啊，接下来我们来看一下如何做到的：</p>
 <a id="more"></a>
@@ -43,13 +42,14 @@
     <summary type="html">
     
       &lt;blockquote&gt;
-&lt;p&gt;引言&lt;/p&gt;
-&lt;p&gt;对于android人员来说，肯定接触过电商类的app开发，而商品的添加动画会让用户体验提升一大截。&lt;/p&gt;
+&lt;p&gt;引言&lt;br&gt;对于android人员来说，肯定接触过电商类的app开发，而商品的添加动画会让用户体验提升一大截。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;下面我给大家介绍一下如何制作商品的添加动画，先来看一下效果图：&lt;br&gt;怎么样，是不是还不错啊，接下来我们来看一下如何做到的：&lt;/p&gt;
     
     </summary>
     
+    
+      <category term="自定义ViewGroup" scheme="https://luweicheng24.github.io/tags/%E8%87%AA%E5%AE%9A%E4%B9%89ViewGroup/"/>
     
   </entry>
   
@@ -201,9 +201,9 @@
     <link href="https://luweicheng24.github.io/2017/08/21/viewpager/"/>
     <id>https://luweicheng24.github.io/2017/08/21/viewpager/</id>
     <published>2017-08-21T06:45:19.000Z</published>
-    <updated>2017-08-21T06:48:11.837Z</updated>
+    <updated>2017-08-21T07:11:18.733Z</updated>
     
-    <content type="html"><![CDATA[<p>###ViewPager实现轮播图<br>对于轮播图的实现，我上次已经在博客中通过自定义ViewGroup实现了，不过过程比较复杂，设置到动画以及图片位置的计算，今天通过Android原生的ViewPager来实现开一个效果比较好的轮播图，<br><a id="more"></a><br>先上个效果图：<br><img src="http://img.blog.csdn.net/20170616094436328?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="轮播图"><br>在实现之前在ViewGroup中有个属性值：clipChilder=”true|false”这个值默认是true，就是当父布局设置为true时，子控件设置的宽和高都必须裁剪成和父布局一样大，但是设置为false时，子控件如过设置的比父控件小，多出的部分将不展示其他控件，在ViewPager中如果固定好了Viewpager的宽，设置margin给左右两边之后，两边将会显示ViewPager中的其他视图，下面是ViewPager的布局：</p>
+    <content type="html"><![CDATA[<p>ViewPager实现轮播图<br>对于轮播图的实现，我上次已经在博客中通过自定义ViewGroup实现了，不过过程比较复杂，设置到动画以及图片位置的计算，今天通过Android原生的ViewPager来实现开一个效果比较好的轮播图，<br><a id="more"></a><br>先上个效果图：<br><img src="http://img.blog.csdn.net/20170616094436328?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHV3ZWljaGVuZzI0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="轮播图"><br>在实现之前在ViewGroup中有个属性值：clipChilder=”true|false”这个值默认是true，就是当父布局设置为true时，子控件设置的宽和高都必须裁剪成和父布局一样大，但是设置为false时，子控件如过设置的比父控件小，多出的部分将不展示其他控件，在ViewPager中如果固定好了Viewpager的宽，设置margin给左右两边之后，两边将会显示ViewPager中的其他视图，下面是ViewPager的布局：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;RelativeLayout</div><div class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</div><div class="line">    android:layout_height=&quot;match_parent&quot;</div><div class="line">    android:layout_width=&quot;match_parent&quot;</div><div class="line">    android:orientation=&quot;horizontal&quot;</div><div class="line">    android:clipChildren=&quot;false&quot;</div><div class="line">    &gt;</div><div class="line">  &lt;ImageView</div><div class="line">      android:id=&quot;@+id/img_bg&quot;</div><div class="line">      android:layout_width=&quot;match_parent&quot;</div><div class="line">      android:layout_height=&quot;match_parent&quot; /&gt;</div><div class="line">  &lt;android.support.v4.view.ViewPager</div><div class="line">      android:id=&quot;@+id/viewPager&quot;</div><div class="line">      android:layout_centerInParent=&quot;true&quot;</div><div class="line">      android:layout_width=&quot;match_parent&quot;</div><div class="line">      android:layout_height=&quot;350dp&quot;</div><div class="line">      android:layout_marginLeft=&quot;55dp&quot;</div><div class="line">      android:layout_marginRight=&quot;55dp&quot;</div><div class="line">      &gt;</div><div class="line"></div><div class="line">  &lt;/android.support.v4.view.ViewPager&gt;</div><div class="line"></div><div class="line">&lt;/RelativeLayout&gt;</div></pre></td></tr></table></figure>
 <p>在布局中这样设置后屏幕就会出现ViewPager中的三个视图，中间最大，两边只是视图的一部分，然后就是如何实现两边的视图高度比中间的小，通过滑动到中间时高度又增加，这是通过自定义ViewPager.PagerTransform来实现的，该类中包含一个方法 public void transformPage(View page, float position)，该方法实在ViewPager中视图滑动时调用，其中的position当取值范围分为三个阶段：(-视图个数 ， -1)，[-1,1] ,(1,视图个数);其中第一个取值表示当视图从中间滑到坐边时，第二个表示视图从右边滑动到中间时，第三个表示视图从右边滑到右边可是框内时调用，核心代码如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public static final float MIN_SCALE = 0.6f;</div><div class="line">        @Override</div><div class="line">        public void transformPage(View page, float position) &#123;</div><div class="line">            if(position&lt;-1)&#123;</div><div class="line">                page.setScaleY(MIN_SCALE);</div><div class="line">                page.setAlpha(MIN_SCALE);</div><div class="line">            &#125;else if(position&lt;=1)&#123;</div><div class="line">                float scale = Math.max(MIN_SCALE,1-Math.abs(position));</div><div class="line">                page.setScaleY(scale);</div><div class="line">                page.setAlpha(scale);</div><div class="line">            &#125;else &#123;</div><div class="line">                page.setScaleY(MIN_SCALE);</div><div class="line">                page.setAlpha(MIN_SCALE);</div><div class="line"></div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div></pre></td></tr></table></figure>
@@ -218,7 +218,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;###ViewPager实现轮播图&lt;br&gt;对于轮播图的实现，我上次已经在博客中通过自定义ViewGroup实现了，不过过程比较复杂，设置到动画以及图片位置的计算，今天通过Android原生的ViewPager来实现开一个效果比较好的轮播图，&lt;br&gt;
+      &lt;p&gt;ViewPager实现轮播图&lt;br&gt;对于轮播图的实现，我上次已经在博客中通过自定义ViewGroup实现了，不过过程比较复杂，设置到动画以及图片位置的计算，今天通过Android原生的ViewPager来实现开一个效果比较好的轮播图，&lt;br&gt;
     
     </summary>
     
@@ -258,11 +258,10 @@
     <link href="https://luweicheng24.github.io/2017/08/21/%E9%9D%A2%E8%AF%95/"/>
     <id>https://luweicheng24.github.io/2017/08/21/面试/</id>
     <published>2017-08-21T06:36:26.000Z</published>
-    <updated>2017-08-21T06:39:48.687Z</updated>
+    <updated>2017-08-21T07:11:44.268Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
-<p>引言 </p>
-<p>今天去北京某公司面试一个Android的sdk开发工程师，到达公司后直接商家根据需求完成相应的编码工作，20分钟写不出来没有面试机会,结果不出意外的我没有完全写出来，被pass掉，内心虽然有些失落，但是一想，毕竟这个岗位薪资是是相对可观的，没有那么容易。也就释然了，在回来的路上才想到了如何写出来这个，欲哭无泪啊，于是想起一句话：机会随时都有，就看你准备好了没。</p>
+<p>引言<br>今天去北京某公司面试一个Android的sdk开发工程师，到达公司后直接商家根据需求完成相应的编码工作，20分钟写不出来没有面试机会,结果不出意外的我没有完全写出来，被pass掉，内心虽然有些失落，但是一想，毕竟这个岗位薪资是是相对可观的，没有那么容易。也就释然了，在回来的路上才想到了如何写出来这个，欲哭无泪啊，于是想起一句话：机会随时都有，就看你准备好了没。</p>
 </blockquote>
 <p>下面是我回到房子后重新写的那个面试题,编写完成，测试没毛病：</p>
 <blockquote>
@@ -281,8 +280,7 @@
     <summary type="html">
     
       &lt;blockquote&gt;
-&lt;p&gt;引言 &lt;/p&gt;
-&lt;p&gt;今天去北京某公司面试一个Android的sdk开发工程师，到达公司后直接商家根据需求完成相应的编码工作，20分钟写不出来没有面试机会,结果不出意外的我没有完全写出来，被pass掉，内心虽然有些失落，但是一想，毕竟这个岗位薪资是是相对可观的，没有那么容易。也就释然了，在回来的路上才想到了如何写出来这个，欲哭无泪啊，于是想起一句话：机会随时都有，就看你准备好了没。&lt;/p&gt;
+&lt;p&gt;引言&lt;br&gt;今天去北京某公司面试一个Android的sdk开发工程师，到达公司后直接商家根据需求完成相应的编码工作，20分钟写不出来没有面试机会,结果不出意外的我没有完全写出来，被pass掉，内心虽然有些失落，但是一想，毕竟这个岗位薪资是是相对可观的，没有那么容易。也就释然了，在回来的路上才想到了如何写出来这个，欲哭无泪啊，于是想起一句话：机会随时都有，就看你准备好了没。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;下面是我回到房子后重新写的那个面试题,编写完成，测试没毛病：&lt;/p&gt;
 &lt;blockquote&gt;
@@ -369,11 +367,10 @@
     <link href="https://luweicheng24.github.io/2017/08/21/banner/"/>
     <id>https://luweicheng24.github.io/2017/08/21/banner/</id>
     <published>2017-08-21T06:28:57.000Z</published>
-    <updated>2017-08-21T06:32:11.075Z</updated>
+    <updated>2017-08-21T07:12:34.636Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
-<p>引言</p>
-<p>作为一名Android开发者对于自定义View的掌握体现利润他对控件的深入理解，我下面是自定义ViewGroup实现轮播图；</p>
+<p>引言<br>作为一名Android开发者对于自定义View的掌握体现利润他对控件的深入理解，我下面是自定义ViewGroup实现轮播图；</p>
 </blockquote>
 <a id="more"></a>
 <blockquote>
@@ -397,8 +394,7 @@
     <summary type="html">
     
       &lt;blockquote&gt;
-&lt;p&gt;引言&lt;/p&gt;
-&lt;p&gt;作为一名Android开发者对于自定义View的掌握体现利润他对控件的深入理解，我下面是自定义ViewGroup实现轮播图；&lt;/p&gt;
+&lt;p&gt;引言&lt;br&gt;作为一名Android开发者对于自定义View的掌握体现利润他对控件的深入理解，我下面是自定义ViewGroup实现轮播图；&lt;/p&gt;
 &lt;/blockquote&gt;
     
     </summary>
