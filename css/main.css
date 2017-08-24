@@ -1993,7 +1993,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff347a;
+  background: #2d00cb;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3100,13 +3100,15 @@ pre {
   margin: 5px 0;
   padding: 5px;
   color: #0684bd;
-  background-color: #0ff;
-  border-radius: 3px;
+  background-color: rgba(0,0,0,0);
 }
 .highlight,
 code,
 pre {
-  border: 1px solid #fff;
+  border: 1px solid rgba(0,0,0,0);
+}
+.td code {
+  background-color: rgba(0,0,0,0);
 }
 .post {
   margin-top: 60px;
