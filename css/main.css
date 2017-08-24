@@ -1695,11 +1695,11 @@ pre .javascript .function {
   width: 5em;
 }
 .my_post_copyright a {
-  color: #808080;
+  color: #0ff;
   border-bottom: 0;
 }
 .my_post_copyright a:hover {
-  color: #a3d2a3;
+  color: #fff;
   text-decoration: underline;
 }
 .my_post_copyright:hover .fa-clipboard {
