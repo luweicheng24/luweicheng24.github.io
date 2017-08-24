@@ -946,8 +946,7 @@ pre .javascript .function {
   transition-timing-function: ease-in-out;
   transition-delay: 0s;
 }
-.btn:hover,
-.post-button .btn:hover {
+.btn:hover {
   border-color: #0684bd;
   color: #0684bd;
   background: #fff;
@@ -1252,12 +1251,14 @@ pre .javascript .function {
     margin: 0 20px;
   }
   .post-body pre {
+    background: rgba(0,0,0,0);
     padding: 10px;
   }
   .post-body pre .gutter pre {
     padding-right: 10px;
   }
   .post-body .highlight {
+    background: rgba(0,0,0,0);
     margin-left: 0px;
     margin-right: 0px;
     padding: 0;
@@ -1545,6 +1546,9 @@ pre .javascript .function {
   line-height: 2;
   margin: 0 4px 8px 4px;
 }
+.post-button .btn:hover {
+  color: #fff;
+}
 .post-button .fa-fw {
   width: 1.285714285714286em;
   text-align: left;
@@ -1554,6 +1558,7 @@ pre .javascript .function {
   text-align: center;
 }
 .posts-expand .post-tags a {
+  background-color: rgba(0,0,0,0);
   display: inline-block;
   margin-right: 10px;
   font-size: 13px;
@@ -1575,6 +1580,7 @@ pre .javascript .function {
   vertical-align: top;
 }
 .post-nav-item a {
+  background: rgba(0,0,0,0);
   position: relative;
   display: block;
   line-height: 25px;
@@ -1583,7 +1589,7 @@ pre .javascript .function {
   border-bottom: none;
 }
 .post-nav-item a:hover {
-  color: #0684bd;
+  color: #fff;
   border-bottom: none;
 }
 .post-nav-item a:active {
@@ -1661,12 +1667,12 @@ pre .javascript .function {
   font-family: UKIJ Ekran;
 }
 .post-body p a {
-  color: #0593d3;
+  color: #0ff;
   border-bottom: none;
   border-bottom: 1px solid #0593d3;
 }
 .post-body p a:hover {
-  color: #fc6423;
+  color: #fff;
   border-bottom: none;
   border-bottom: 1px solid #fc6423;
 }
@@ -1718,7 +1724,7 @@ pre .javascript .function {
   }
 }
 .my_post_copyright .copy-path:hover {
-  color: #808080;
+  color: #fff;
   cursor: pointer;
 }
 .sidebar {
@@ -1993,7 +1999,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #3d2f00;
+  background: #9e4d37;
 }
 .links-of-blogroll {
   font-size: 13px;
